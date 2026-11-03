@@ -100,5 +100,5 @@
 }
 
 .caption {
-  color: var(--text);
+  color: var(--lightbox-fg);
 }
