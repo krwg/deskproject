@@ -154,13 +154,25 @@ export function Hero() {
         {urls.length === 0 ? (
           <div className={`${styles.bgLayer} ${styles.bgFallback}`} />
         ) : (
-          urls.map((url, i) => (
-            <div
-              key={`${slides[i]?.id ?? i}-${url}`}
-              className={styles.bgLayer}
-              style={{ backgroundImage: `url("${url}")` }}
-            />
-          ))
+          urls.map((url, i) => {
+            const slide = slides[i]
+            const focusY = slide?.focusY
+            return (
+              <div
+                key={`${slide?.id ?? i}-${url}`}
+                className={styles.bgLayer}
+                style={{
+                  backgroundImage: `url("${url}")`,
+                  ...(typeof focusY === 'number'
+                    ? {
+                        backgroundPosition: `center ${focusY}%`,
+                        transformOrigin: `center ${focusY}%`,
+                      }
+                    : null),
+                }}
+              />
+            )
+          })
         )}
       </div>
       <div className={styles.veil} aria-hidden />
