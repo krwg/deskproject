@@ -1,0 +1,149 @@
+.section {
+  border-top: 1px solid var(--border);
+  
+  overflow: visible;
+}
+
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.header :global(.section-label) {
+  margin-bottom: 0;
+}
+
+.hint {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: var(--tracking-meta);
+  text-transform: uppercase;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.empty {
+  margin-top: 0.5rem;
+}
+
+.scroller {
+  --inset: var(--page-pad);
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  cursor: grab;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  touch-action: pan-x;
+  box-sizing: border-box;
+  
+  padding-inline: var(--inset);
+}
+
+.scroller::-webkit-scrollbar {
+  display: none;
+}
+
+.scroller[data-centered='1'] {
+  display: flex;
+  justify-content: center;
+}
+
+.dragging {
+  cursor: grabbing;
+  user-select: none;
+}
+
+.dragging .item {
+  pointer-events: none;
+}
+
+.track {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  gap: clamp(0.4rem, 1.2vw, 0.65rem);
+  width: max-content;
+  max-width: none;
+  padding-bottom: 0.35rem;
+  box-sizing: border-box;
+}
+
+.scroller[data-centered='1'] .track {
+  justify-content: center;
+  margin-inline: auto;
+}
+
+.item {
+  flex: 0 0 clamp(12rem, 36vw, 22rem);
+  display: grid;
+  grid-template-rows: auto auto;
+  gap: 0.4rem;
+  min-width: 0;
+}
+
+@media (max-width: 520px) {
+  .item {
+    flex-basis: min(78vw, 18rem);
+  }
+}
+
+@media (max-width: 767px) {
+  .header {
+    margin-bottom: 1rem;
+  }
+
+  .hint {
+    white-space: normal;
+  }
+
+  .scroller {
+    --inset: var(--page-pad);
+  }
+
+  .item {
+    flex-basis: min(82vw, 19rem);
+  }
+
+  .meta {
+    font-size: 0.62rem;
+  }
+}
+
+.frame {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: #080808;
+  border: 1px solid #202020;
+}
+
+.frame :global(figure) {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: transparent;
+}
+
+.frame :global(img),
+.frame :global(video) {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: var(--tracking-meta);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}

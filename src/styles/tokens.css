@@ -1,0 +1,64 @@
+:root {
+  
+  --bg: #080808;
+  --bg-elevated: #0a0a0a;
+  --text: #f2f2f0;
+  --text-muted: #858585;
+  --muted: #383838;
+  --border: #292929;
+  --border-strong: #3a3a3a;
+  --surface-light: #eaeae8;
+  --text-on-light: #111111;
+
+  
+  --font-sans: 'Manrope', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-mono: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
+
+  --fs-xs: clamp(0.65rem, 0.6rem + 0.2vw, 0.75rem);
+  --fs-sm: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+  --fs-base: clamp(0.9rem, 0.85rem + 0.3vw, 1.05rem);
+  --fs-md: clamp(1.05rem, 1rem + 0.4vw, 1.25rem);
+  --fs-lg: clamp(1.35rem, 1.1rem + 1vw, 2rem);
+  --fs-xl: clamp(2rem, 1.4rem + 2.5vw, 3.5rem);
+  --fs-hero: clamp(2.6rem, 1.8rem + 4vw, 5.5rem);
+
+  --lh-tight: 1.05;
+  --lh-snug: 1.25;
+  --lh-body: 1.6;
+
+  --tracking-tight: -0.03em;
+  --tracking-wide: 0.08em;
+  --tracking-meta: 0.14em;
+
+  
+  --page-pad: clamp(1rem, 3vw, 2.5rem);
+  --max-w: 1440px;
+  --header-h: 3.5rem;
+  --radius: 0;
+  --hairline: 1px;
+
+  
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-inout: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 180ms;
+  --dur: 420ms;
+  --dur-slow: 720ms;
+
+  color-scheme: dark;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-fast: 0ms;
+    --dur: 0ms;
+    --dur-slow: 0ms;
+  }
+}
+
+@media (max-width: 767px) {
+  :root {
+    --page-pad: 1rem;
+    --header-h: 3.25rem;
+    --fs-hero: clamp(2.15rem, 11vw, 2.85rem);
+  }
+}

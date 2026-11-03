@@ -1,0 +1,235 @@
+.hero {
+  position: relative;
+  isolation: isolate;
+  
+  height: 97dvh;
+  min-height: 97dvh;
+  max-height: 97dvh;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  display: grid;
+  overflow: hidden;
+  background: #050505;
+}
+
+.bg {
+  position: absolute;
+  
+  inset: -8% 0 -18% 0;
+  z-index: 0;
+  background-color: #0a0a0a;
+  background-image: var(--hero-bg);
+  background-position: center 63%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  filter: grayscale(1) contrast(1.28) brightness(0.62);
+  transform: translateZ(0);
+}
+
+.veil {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.82) 0%,
+      rgba(0, 0, 0, 0.28) 48%,
+      rgba(0, 0, 0, 0.4) 100%
+    ),
+    radial-gradient(
+      ellipse 75% 55% at 28% 52%,
+      rgba(0, 0, 0, 0.28),
+      transparent 70%
+    );
+  pointer-events: none;
+}
+
+.inner {
+  position: relative;
+  z-index: 2;
+  width: min(100% - var(--page-pad) * 2, var(--max-w));
+  margin-inline: auto;
+  height: 100%;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  align-content: stretch;
+  padding:
+    calc(var(--header-h) + 0.5rem)
+    0
+    clamp(1.1rem, 3vw, 1.75rem);
+  box-sizing: border-box;
+}
+
+.copy {
+  display: grid;
+  gap: 1.1rem;
+  align-content: end;
+  justify-items: start;
+  max-width: 38rem;
+  
+  padding-bottom: clamp(2.5rem, 8vh, 5.5rem);
+  transform: translateY(2vh);
+}
+
+.brand {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.35rem;
+}
+
+.title {
+  font-size: var(--fs-hero);
+  letter-spacing: var(--tracking-tight);
+  font-weight: 500;
+  line-height: 0.95;
+  color: #f4f4f4;
+  text-shadow: 0 2px 28px rgba(0, 0, 0, 0.45);
+}
+
+.author {
+  font-family: var(--font-mono);
+  font-size: clamp(0.85rem, 0.7rem + 0.6vw, 1.15rem);
+  letter-spacing: var(--tracking-meta);
+  color: rgba(220, 220, 220, 0.75);
+  white-space: nowrap;
+  text-decoration: none;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.author:hover {
+  color: #f2f2f2;
+}
+
+.tagline {
+  max-width: 28ch;
+  font-size: var(--fs-md);
+  line-height: var(--lh-snug);
+  color: #ececec;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 0.35rem;
+}
+
+.actions :global(.btn) {
+  backdrop-filter: blur(6px);
+}
+
+.actions :global(.btn:not(.btn--light)) {
+  background: rgba(8, 8, 8, 0.35);
+  border-color: rgba(255, 255, 255, 0.45);
+  color: #f2f2f2;
+}
+
+.scrollCue {
+  display: inline-flex;
+  align-items: center;
+  justify-self: center;
+  gap: 0.85rem;
+  width: fit-content;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: var(--tracking-meta);
+  text-transform: uppercase;
+  color: rgba(220, 220, 220, 0.72);
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+.scrollCue:hover {
+  color: #fff;
+}
+
+.scrollLine {
+  width: 40px;
+  height: 1px;
+  background: rgba(220, 220, 220, 0.45);
+  position: relative;
+  overflow: hidden;
+}
+
+.scrollLine::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: #fff;
+  transform: translateX(-100%);
+  animation: cue 1.8s var(--ease-inout) infinite;
+}
+
+@keyframes cue {
+  0% {
+    transform: translateX(-100%);
+  }
+  50% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scrollLine::after {
+    animation: none;
+    transform: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .hero {
+    height: 100dvh;
+    min-height: 100dvh;
+    max-height: none;
+  }
+
+  .bg {
+    inset: -4% 0 -12% 0;
+    background-position: center 58%;
+  }
+
+  .inner {
+    padding-bottom: 1.25rem;
+  }
+
+  .copy {
+    gap: 0.85rem;
+    max-width: 100%;
+    padding-bottom: 1.5rem;
+    transform: none;
+  }
+
+  .title {
+    line-height: 0.98;
+  }
+
+  .author {
+    white-space: normal;
+  }
+
+  .tagline {
+    max-width: 28ch;
+    font-size: var(--fs-base);
+  }
+
+  .actions {
+    width: 100%;
+  }
+
+  .actions :global(.btn) {
+    flex: 1 1 auto;
+    justify-content: center;
+  }
+
+  .scrollCue {
+    gap: 0.65rem;
+  }
+}

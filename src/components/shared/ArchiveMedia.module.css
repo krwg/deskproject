@@ -1,0 +1,170 @@
+.root {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: #080808;
+  border: 0;
+  content-visibility: auto;
+  contain-intrinsic-size: 400px;
+  --tone-exposure: 1;
+  --tone-brightness: 0.86;
+  --tone-contrast: 1.28;
+  --tone-gray: 1;
+}
+
+.fill {
+  height: 100%;
+  content-visibility: visible;
+  contain-intrinsic-size: auto;
+}
+
+.media {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transform: scale(1);
+  transform-origin: center;
+  transition:
+    filter var(--dur) var(--ease-out),
+    transform 520ms var(--ease-out);
+  will-change: transform, filter;
+}
+
+.mono .media {
+  filter:
+    grayscale(var(--tone-gray))
+    brightness(calc(var(--tone-brightness) * var(--tone-exposure)))
+    contrast(var(--tone-contrast))
+    saturate(0);
+}
+
+.root:hover.mono .media,
+.mono:hover .media {
+  filter:
+    grayscale(var(--tone-gray))
+    brightness(calc(var(--tone-brightness) * var(--tone-exposure) * 1.06))
+    contrast(calc(var(--tone-contrast) * 1.03))
+    saturate(0);
+  transform: scale(1.035);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .media {
+    transition: none;
+    transform: none;
+  }
+
+  .root:hover.mono .media,
+  .mono:hover .media {
+    transform: none;
+  }
+}
+
+.videoBadge {
+  position: absolute;
+  top: 0.55rem;
+  right: 0.55rem;
+  z-index: 2;
+  padding: 0.25rem 0.4rem;
+  border: 1px solid var(--border-strong);
+  background: rgba(8, 8, 8, 0.78);
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: var(--tracking-meta);
+  text-transform: uppercase;
+  color: var(--text);
+  pointer-events: none;
+}
+
+.placeholder {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background:
+    linear-gradient(
+      to right,
+      transparent 0,
+      transparent calc(50% - 0.5px),
+      var(--border) calc(50% - 0.5px),
+      var(--border) calc(50% + 0.5px),
+      transparent calc(50% + 0.5px)
+    ),
+    linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent calc(50% - 0.5px),
+      var(--border) calc(50% - 0.5px),
+      var(--border) calc(50% + 0.5px),
+      transparent calc(50% + 0.5px)
+    ),
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 23px,
+      rgba(41, 41, 41, 0.55) 23px,
+      rgba(41, 41, 41, 0.55) 24px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 23px,
+      rgba(41, 41, 41, 0.55) 23px,
+      rgba(41, 41, 41, 0.55) 24px
+    ),
+    #0c0c0c;
+}
+
+.placeholderInner {
+  text-align: center;
+  padding: 1rem;
+  border: 1px solid var(--border-strong);
+  background: rgba(8, 8, 8, 0.72);
+}
+
+.placeholderLabel {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: var(--tracking-meta);
+  text-transform: uppercase;
+  color: var(--text);
+}
+
+.placeholderMeta {
+  margin-top: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: var(--tracking-meta);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.wire {
+  position: absolute;
+  inset: 12%;
+  border: 1px solid var(--muted);
+  pointer-events: none;
+  opacity: 0.55;
+}
+
+.wire::before,
+.wire::after {
+  content: '';
+  position: absolute;
+  background: var(--muted);
+}
+
+.wire::before {
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1px;
+}
+
+.wire::after {
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 1px;
+}

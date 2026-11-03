@@ -1,0 +1,31 @@
+.shell {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main {
+  flex: 1;
+  min-width: 0;
+}
+
+.pageEnter {
+  animation: pageIn var(--dur) var(--ease-out);
+}
+
+@keyframes pageIn {
+  from {
+    opacity: 0;
+    clip-path: inset(0 0 4% 0);
+  }
+  to {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pageEnter {
+    animation: none;
+  }
+}

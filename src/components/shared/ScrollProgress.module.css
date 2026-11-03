@@ -1,0 +1,17 @@
+.root {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  z-index: 9000;
+  pointer-events: none;
+  background: transparent;
+}
+
+.bar {
+  height: 100%;
+  width: 0%;
+  background: var(--text);
+  transform-origin: left center;
+}
