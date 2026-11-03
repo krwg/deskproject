@@ -1,8 +1,8 @@
-import { useEffect, useRef, type CSSProperties } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { getHomeBackground } from '@/data/home'
+import { getHomeBackgroundSlides } from '@/data/home'
 import { site } from '@/data/site'
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion'
 import { assetUrl } from '@/utils/assetUrl'
@@ -10,12 +10,23 @@ import styles from './Hero.module.css'
 
 gsap.registerPlugin(ScrollTrigger)
 
+const HOLD_S = 6.4
+const FADE_S = 1.4
+
 export function Hero() {
   const rootRef = useRef<HTMLElement>(null)
-  const bgRef = useRef<HTMLDivElement>(null)
+  const stackRef = useRef<HTMLDivElement>(null)
   const reduced = usePrefersReducedMotion()
-  const bg = getHomeBackground()
-  const bgUrl = bg ? assetUrl(bg.src) : null
+  const slides = useMemo(() => getHomeBackgroundSlides(), [])
+  const urls = useMemo(() => slides.map((s) => assetUrl(s.src)), [slides])
+
+  useEffect(() => {
+    urls.forEach((url) => {
+      const img = new Image()
+      img.decoding = 'async'
+      img.src = url
+    })
+  }, [urls])
 
   useEffect(() => {
     const root = rootRef.current
@@ -35,9 +46,9 @@ export function Hero() {
     })
 
     let parallax: gsap.core.Tween | undefined
-    if (bgRef.current) {
-      parallax = gsap.to(bgRef.current, {
-        yPercent: 12,
+    if (stackRef.current) {
+      parallax = gsap.to(stackRef.current, {
+        yPercent: 10,
         ease: 'none',
         scrollTrigger: {
           trigger: root,
@@ -54,7 +65,82 @@ export function Hero() {
       parallax?.kill()
       gsap.set(targets, { clearProps: 'opacity,transform' })
     }
-  }, [reduced, bgUrl])
+  }, [reduced])
+
+  useEffect(() => {
+    const stack = stackRef.current
+    if (!stack || urls.length === 0) return
+
+    const layers = Array.from(
+      stack.querySelectorAll<HTMLElement>(`.${styles.bgLayer}`),
+    )
+    if (layers.length === 0) return
+
+    const tweens: gsap.core.Tween[] = []
+    let index = 0
+    let timer = 0
+
+    const drift = (layer: HTMLElement) => {
+      const t = gsap.fromTo(
+        layer,
+        { scale: 1.05 },
+        {
+          scale: 1.14,
+          duration: HOLD_S + FADE_S,
+          ease: 'sine.inOut',
+        },
+      )
+      tweens.push(t)
+      return t
+    }
+
+    gsap.set(layers, { autoAlpha: 0, scale: 1.05 })
+    gsap.set(layers[0], { autoAlpha: 1 })
+    drift(layers[0])
+
+    if (reduced || layers.length < 2) {
+      return () => {
+        tweens.forEach((t) => t.kill())
+        gsap.set(layers, { clearProps: 'opacity,visibility,transform' })
+      }
+    }
+
+    const advance = () => {
+      const current = layers[index]
+      const nextIndex = (index + 1) % layers.length
+      const next = layers[nextIndex]
+
+      tweens.push(
+        gsap.to(current, {
+          autoAlpha: 0,
+          duration: FADE_S,
+          ease: 'power2.inOut',
+        }),
+      )
+      tweens.push(
+        gsap.fromTo(
+          next,
+          { autoAlpha: 0, scale: 1.05 },
+          {
+            autoAlpha: 1,
+            duration: FADE_S,
+            ease: 'power2.inOut',
+          },
+        ),
+      )
+      drift(next)
+      index = nextIndex
+      timer = window.setTimeout(advance, HOLD_S * 1000)
+    }
+
+    timer = window.setTimeout(advance, HOLD_S * 1000)
+
+    return () => {
+      window.clearTimeout(timer)
+      tweens.forEach((t) => t.kill())
+      gsap.set(layers, { clearProps: 'opacity,visibility,transform' })
+    }
+  }, [urls, reduced])
 
   const scrollToArchive = () => {
     document
@@ -63,17 +149,20 @@ export function Hero() {
   }
 
   return (
-    <section
-      ref={rootRef}
-      className={styles.hero}
-      aria-label="Hero"
-      style={
-        bgUrl
-          ? ({ ['--hero-bg']: `url("${bgUrl}")` } as CSSProperties)
-          : undefined
-      }
-    >
-      <div ref={bgRef} className={styles.bg} aria-hidden />
+    <section ref={rootRef} className={styles.hero} aria-label="Hero">
+      <div ref={stackRef} className={styles.bgStack} aria-hidden>
+        {urls.length === 0 ? (
+          <div className={`${styles.bgLayer} ${styles.bgFallback}`} />
+        ) : (
+          urls.map((url, i) => (
+            <div
+              key={`${slides[i]?.id ?? i}-${url}`}
+              className={styles.bgLayer}
+              style={{ backgroundImage: `url("${url}")` }}
+            />
+          ))
+        )}
+      </div>
       <div className={styles.veil} aria-hidden />
 
       <div className={styles.inner}>

@@ -181,13 +181,8 @@ export function getSetMedia(set: MediaSet): MediaFile[] {
   return [set.main, ...set.items]
 }
 
-/** Featured Current Setup strip on Home — explicit set order. */
-const CURRENT_SETUP_IDS = ['38', '41', '42', '23', '19'] as const
-
 export function getCurrentSetupSets(): MediaSet[] {
-  return CURRENT_SETUP_IDS.map((id) => getSet(id)).filter(
-    (set): set is MediaSet => Boolean(set && !set.awaiting),
-  )
+  return sortSetsChrono(getSetsByPlacement('home'), 'desc')
 }
 
 export function getGallerySets(): MediaSet[] {

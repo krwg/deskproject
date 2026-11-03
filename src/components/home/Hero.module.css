@@ -13,18 +13,33 @@
   background: var(--plate-deep);
 }
 
-.bg {
+.bgStack {
   position: absolute;
-  
   inset: -8% 0 -18% 0;
   z-index: 0;
+  overflow: hidden;
+  background: var(--plate);
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+.bgLayer {
+  position: absolute;
+  inset: 0;
   background-color: var(--plate);
-  background-image: var(--hero-bg);
   background-position: center 63%;
   background-size: cover;
   background-repeat: no-repeat;
   filter: grayscale(1) contrast(1.28) brightness(0.62);
-  transform: translateZ(0);
+  opacity: 0;
+  transform: scale(1.04);
+  transform-origin: center 58%;
+  will-change: opacity, transform;
+}
+
+.bgFallback {
+  opacity: 1;
+  transform: none;
 }
 
 .veil {
@@ -191,8 +206,11 @@
     max-height: none;
   }
 
-  .bg {
+  .bgStack {
     inset: -4% 0 -12% 0;
+  }
+
+  .bgLayer {
     background-position: center 58%;
   }
 

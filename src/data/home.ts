@@ -7,30 +7,53 @@ type HomeManifest = {
   thumbnail: string | null
 }
 
+export type HomeBackgroundSlide = {
+  id: string
+  src: string
+  thumbnail: string
+}
+
 const disk = homeManifest as HomeManifest
 
-const HOME_BG_SET_ID = '42'
+/** Hero plate slideshow — set covers under the title. */
+const HERO_BG_SET_IDS = ['38', '41', '42', '23', '19'] as const
 
-export function getHomeBackground(): { src: string; thumbnail: string } | null {
-  if (disk.src) {
-    return {
-      src: disk.src,
-      thumbnail: disk.thumbnail || disk.src,
-    }
+export function getHomeBackgroundSlides(): HomeBackgroundSlide[] {
+  const fromSets: HomeBackgroundSlide[] = []
+  for (const id of HERO_BG_SET_IDS) {
+    const set = getSet(id)
+    if (!set || set.awaiting) continue
+    fromSets.push({
+      id,
+      src: set.main.src,
+      thumbnail: set.main.thumbnail || set.main.src,
+    })
   }
 
-  const preferred = getSet(HOME_BG_SET_ID)
-  if (preferred && !preferred.awaiting) {
-    return {
-      src: preferred.main.src,
-      thumbnail: preferred.main.thumbnail || preferred.main.src,
-    }
+  if (fromSets.length > 0) return fromSets
+
+  if (disk.src) {
+    return [
+      {
+        id: 'manifest',
+        src: disk.src,
+        thumbnail: disk.thumbnail || disk.src,
+      },
+    ]
   }
 
   const hero = getHeroSet()
-  if (!hero || hero.awaiting) return null
-  return {
-    src: hero.main.src,
-    thumbnail: hero.main.thumbnail || hero.main.src,
-  }
+  if (!hero || hero.awaiting) return []
+  return [
+    {
+      id: hero.id,
+      src: hero.main.src,
+      thumbnail: hero.main.thumbnail || hero.main.src,
+    },
+  ]
+}
+
+/** @deprecated Prefer getHomeBackgroundSlides — kept for callers expecting one frame. */
+export function getHomeBackground(): { src: string; thumbnail: string } | null {
+  return getHomeBackgroundSlides()[0] ?? null
 }
