@@ -37,6 +37,7 @@ export function Comments({ term }: Props) {
             categoryId={giscusConfig.categoryId!}
             mapping={(giscusConfig.mapping as 'pathname') || 'pathname'}
             term={term}
+            strict="0"
             reactionsEnabled="1"
             emitMetadata="0"
             inputPosition="bottom"
