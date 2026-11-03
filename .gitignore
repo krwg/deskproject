@@ -14,6 +14,7 @@ pnpm-debug.log*
 lerna-debug.log*
 
 # Environment & secrets
+# Keep .env.example tracked — it's a public template, not secrets.
 .env
 .env.*
 !.env.example
@@ -21,6 +22,13 @@ lerna-debug.log*
 *.key
 credentials*.json
 secrets/
+
+# Private notes / local-only docs
+CONTENT.md
+
+# Image pipeline leftovers
+*.tmp
+*.webp.tmp
 
 # Editor / OS
 .vscode/*
