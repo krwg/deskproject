@@ -1,11 +1,19 @@
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { GalleryGrid } from '@/components/gallery/GalleryGrid'
-import { flattenMedia, getGallerySets } from '@/data/sets'
+import {
+  GallerySort,
+  type GallerySortOrder,
+} from '@/components/gallery/GallerySort'
+import { flattenMedia, getGallerySets, sortSetsChrono } from '@/data/sets'
 import { padIndex } from '@/utils/assetUrl'
 import styles from './Gallery.module.css'
 
 export function GalleryPage() {
-  const sets = useMemo(() => getGallerySets(), [])
+  const [order, setOrder] = useState<GallerySortOrder>('asc')
+  const sets = useMemo(
+    () => sortSetsChrono(getGallerySets(), order),
+    [order],
+  )
   const mediaCount = useMemo(() => flattenMedia(sets).length, [sets])
 
   return (
@@ -18,10 +26,14 @@ export function GalleryPage() {
             Covers only. Click a set to open clarifying frames and short loops —
             each folder is one specimen in the chronological hall.
           </p>
+        </header>
+
+        <div className={styles.metaRow}>
           <div className={styles.count}>
             SETS {padIndex(sets.length)} / MEDIA {padIndex(mediaCount)}
           </div>
-        </header>
+          <GallerySort value={order} onChange={setOrder} />
+        </div>
       </div>
 
       <div className={styles.bridge} aria-hidden />
