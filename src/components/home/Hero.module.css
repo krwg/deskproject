@@ -34,7 +34,8 @@
   opacity: 0;
   transform: scale(1.04);
   transform-origin: center 58%;
-  will-change: opacity, transform;
+  clip-path: inset(0 0 0 0);
+  will-change: opacity, transform, clip-path;
 }
 
 .bgFallback {

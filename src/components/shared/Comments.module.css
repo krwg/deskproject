@@ -34,6 +34,7 @@
 .frame {
   border: 1px solid var(--border);
   background: var(--comments-frame);
+  box-shadow: var(--shadow-paper);
   padding: clamp(0.75rem, 2vw, 1.25rem);
 }
 

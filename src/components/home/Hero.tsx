@@ -10,8 +10,8 @@ import styles from './Hero.module.css'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const HOLD_S = 6.4
-const FADE_S = 1.4
+const HOLD_S = 6.8
+const WIPE_S = 1.05
 
 export function Hero() {
   const rootRef = useRef<HTMLElement>(null)
@@ -80,28 +80,36 @@ export function Hero() {
     let index = 0
     let timer = 0
 
+    const clearLayerProps =
+      'opacity,visibility,transform,clip-path,z-index'
+
     const drift = (layer: HTMLElement) => {
       const t = gsap.fromTo(
         layer,
-        { scale: 1.05 },
+        { scale: 1.04 },
         {
-          scale: 1.14,
-          duration: HOLD_S + FADE_S,
-          ease: 'sine.inOut',
+          scale: 1.1,
+          duration: HOLD_S + WIPE_S,
+          ease: 'none',
         },
       )
       tweens.push(t)
       return t
     }
 
-    gsap.set(layers, { autoAlpha: 0, scale: 1.05 })
-    gsap.set(layers[0], { autoAlpha: 1 })
+    gsap.set(layers, {
+      autoAlpha: 0,
+      scale: 1.04,
+      clipPath: 'inset(0 0% 0 0)',
+      zIndex: 0,
+    })
+    gsap.set(layers[0], { autoAlpha: 1, zIndex: 1 })
     drift(layers[0])
 
     if (reduced || layers.length < 2) {
       return () => {
         tweens.forEach((t) => t.kill())
-        gsap.set(layers, { clearProps: 'opacity,visibility,transform' })
+        gsap.set(layers, { clearProps: clearLayerProps })
       }
     }
 
@@ -110,27 +118,32 @@ export function Hero() {
       const nextIndex = (index + 1) % layers.length
       const next = layers[nextIndex]
 
+      gsap.set(next, {
+        autoAlpha: 1,
+        scale: 1.04,
+        clipPath: 'inset(0 100% 0 0)',
+        zIndex: 2,
+      })
+      gsap.set(current, { zIndex: 1 })
+
       tweens.push(
-        gsap.to(current, {
-          autoAlpha: 0,
-          duration: FADE_S,
-          ease: 'power2.inOut',
-        }),
-      )
-      tweens.push(
-        gsap.fromTo(
-          next,
-          { autoAlpha: 0, scale: 1.05 },
-          {
-            autoAlpha: 1,
-            duration: FADE_S,
-            ease: 'power2.inOut',
+        gsap.to(next, {
+          clipPath: 'inset(0 0% 0 0)',
+          duration: WIPE_S,
+          ease: 'power3.inOut',
+          onComplete: () => {
+            gsap.set(current, {
+              autoAlpha: 0,
+              clipPath: 'inset(0 0% 0 0)',
+              zIndex: 0,
+            })
+            gsap.set(next, { zIndex: 1 })
           },
-        ),
+        }),
       )
       drift(next)
       index = nextIndex
-      timer = window.setTimeout(advance, HOLD_S * 1000)
+      timer = window.setTimeout(advance, (HOLD_S + WIPE_S) * 1000)
     }
 
     timer = window.setTimeout(advance, HOLD_S * 1000)
@@ -138,7 +151,7 @@ export function Hero() {
     return () => {
       window.clearTimeout(timer)
       tweens.forEach((t) => t.kill())
-      gsap.set(layers, { clearProps: 'opacity,visibility,transform' })
+      gsap.set(layers, { clearProps: clearLayerProps })
     }
   }, [urls, reduced])
 

@@ -22,6 +22,7 @@
   min-height: clamp(22rem, 52vh, 34rem);
   border: 1px solid var(--xray-border);
   background: var(--xray-bg);
+  box-shadow: var(--shadow-paper);
   overflow: hidden;
   overscroll-behavior: none;
   touch-action: none;

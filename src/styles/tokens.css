@@ -23,6 +23,10 @@
   --scrim: rgba(0, 0, 0, 0.94);
   --comments-frame: #080808;
   --shadow-soft: 0 12px 40px rgba(0, 0, 0, 0.35);
+  --shadow-paper:
+    0 1px 0 rgba(0, 0, 0, 0.28),
+    0 1px 2px rgba(0, 0, 0, 0.22),
+    0 6px 18px rgba(0, 0, 0, 0.28);
 
   --rail-bg: #080808;
   --rail-grid: rgba(255, 255, 255, 0.035);
@@ -104,9 +108,13 @@ html[data-theme='light'] {
   --plate-border: #2a2a2a;
   --scrim: rgba(18, 18, 18, 0.88);
   --comments-frame: #ffffff;
-  --shadow-soft: 0 16px 48px rgba(18, 18, 18, 0.08);
+  --shadow-soft: 0 8px 24px rgba(18, 18, 18, 0.06);
+  --shadow-paper:
+    0 1px 0 rgba(18, 18, 18, 0.04),
+    0 1px 2px rgba(18, 18, 18, 0.05),
+    0 4px 12px rgba(18, 18, 18, 0.06);
 
-  --rail-bg: #f6f6f4;
+  --rail-bg: #f0f0ec;
   --rail-grid: rgba(18, 18, 18, 0.06);
   --rail-scan: rgba(18, 18, 18, 0.04);
   --panel: #ffffff;
