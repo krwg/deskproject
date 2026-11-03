@@ -22,7 +22,7 @@
 
 Not a template. Not a starter kit. This repository hosts **my** desk — how it looked, how it changed, and how it looks now.
 
-The site reads like a small technical museum: dark plate, Swiss type, monochrome covers that open into color. Sets are chronological folders. Oldest on the left. Newest on the right.
+The site reads like a small technical museum: Swiss type, monochrome covers that open into color, Light / Dark / System theme. Sets are chronological folders. Oldest on the left. Newest on the right.
 
 **Live site → [krwg.github.io/deskproject](https://krwg.github.io/deskproject/)**
 
@@ -34,30 +34,31 @@ The site reads like a small technical museum: dark plate, Swiss type, monochrome
 flowchart LR
   H[Home] --> CS[Current Setup strip]
   H --> XR[X-Ray WebGL desk]
+  H --> HB[Hero slideshow]
   E[Evolution] --> TL[Horizontal timeline]
   TL --> LB[Set album / lightbox]
-  G[Gallery] --> WALL[4:3 cover wall]
+  G[Gallery] --> WALL[Equal 4:3 cover wall]
   WALL --> LB
   A[About] --> VH[Version history]
-  A --> NOTES[Field notes]
+  A --> NOTES[Giscus field notes]
 ```
 
 | Section | What you get |
 |--------|----------------|
-| **Home** | Full-bleed hero, newest sets as a drag strip, project note, interactive **X-Ray** wireframe of the measured workstation |
+| **Home** | Full-bleed hero with rotating set covers, Current Setup drag strip, project note, interactive **X-Ray** wireframe |
 | **Evolution** | Museum timeline — cards above / below the axis, **OPEN SET** opens that album |
-| **Gallery** | Equal 4:3 covers across the wall; click a set for clarifying frames and short video loops |
-| **About** | Statement, structure, version history on an X-ray parts field, optional Giscus notes |
+| **Gallery** | Equal **4:3** cover wall (responsive columns); click a set for clarifying frames and short video loops |
+| **About** | Statement, structure, version history, Giscus notes |
+
+There is no separate Hardware page. Old `/hardware` URLs fall through to Home.
 
 ---
 
 ## The desk in X-Ray
 
-Home section **03** is a live WebGL plate: white edges on black, same language as a blueprint.
+Home section **03** is a live WebGL plate. Dark theme: white edges on black. Light theme: black edges on white.
 
-Built to real proportions — desk, pedestal, case with coolers, monitor + soundbar, keyboard and mouse with a clear gap toward the sitter, mic arm, chair. Drag to orbit. Scroll to zoom (page scroll stays locked over the plate).
-
-Reference aesthetic lives in `public/images/xray/`. The procedural mesh can later be swapped for a measured GLB without changing the camera language.
+Built to real proportions — desk, pedestal, case with coolers, monitor + soundbar, keyboard and mouse with a clear gap toward the sitter, mic arm, chair. Drag to orbit. Scroll to zoom (page scroll stays locked over the plate). Three.js loads only when that section mounts.
 
 ---
 
@@ -70,10 +71,23 @@ NN  →  newest
 ```
 
 - **Gallery / Evolution** — every set that has media, chronological
-- **Current Setup (Home)** — the newest sets, as a horizontal strip
-- **Hero background** — dedicated home plate when present; otherwise falls back to a recent cover
+- **Current Setup (Home)** — the newest sets as a horizontal strip
+- **Hero background** — slideshow of selected set covers (crossfade + slow Ken Burns)
 
-Opening a cover always goes: set grid → single frame. Covers stay mono on the wall; the lightbox is color.
+Opening a cover always goes: set grid → single frame. Covers stay mono on the wall; the lightbox is a darkroom (readable in both themes).
+
+---
+
+## Media & performance notes
+
+Pipeline (`npm run images`) builds WebP + thumbnails. The UI uses:
+
+- `loading="lazy"` / `decoding="async"` on archive images
+- `srcSet` thumb + full where available
+- `content-visibility` on media frames
+- deferred Three.js chunk for X-Ray
+
+That keeps the archive usable as set count grows; it is not a substitute for measuring LCP/CLS on a real device after large additions.
 
 ---
 
@@ -84,10 +98,11 @@ Public foundation of the project:
 - Vite + React SPA on GitHub Pages
 - Folder sets with automatic discovery after the image pipeline
 - WebP / thumbs, short muted video loops
-- Home hero + Current Setup + X-Ray
+- Home hero slideshow + Current Setup + X-Ray
+- Light / Dark / System theme
 - Evolution timeline with OPEN SET
 - Gallery wall + SetLightbox
-- About + version history
+- About + version history + Giscus
 - Mobile layout that leaves the desktop composition alone
 
 ---

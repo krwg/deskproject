@@ -15,7 +15,7 @@ const previews = [
     path: '/gallery',
     title: 'GALLERY',
     description:
-      'Photographic archive with category filters and fullscreen inspection.',
+      'Equal 4:3 cover wall — open a set for clarifying frames and short loops.',
   },
   {
     index: '04',

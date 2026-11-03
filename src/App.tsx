@@ -21,7 +21,6 @@ export default function App() {
             <Route path="evolution" element={<EvolutionPage />} />
             <Route path="gallery" element={<GalleryPage />} />
             <Route path="about" element={<AboutPage />} />
-            <Route path="hardware" element={<Navigate to="/" replace />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Route>
         </Routes>
