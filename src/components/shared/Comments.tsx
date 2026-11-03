@@ -1,21 +1,24 @@
 import { useMemo } from 'react'
 import Giscus from '@giscus/react'
 import { giscusConfig, isGiscusConfigured } from '@/data/giscus'
+import { useTheme } from '@/hooks/useTheme'
 import styles from './Comments.module.css'
 
 type Props = {
-  
   term?: string
 }
 
 export function Comments({ term }: Props) {
+  const { resolved } = useTheme()
+
   const themeHref = useMemo(() => {
-    if (typeof window === 'undefined') return 'transparent_dark'
-    return `${window.location.origin}${import.meta.env.BASE_URL}giscus-theme.css`.replace(
+    if (typeof window === 'undefined') return 'noborder_dark'
+    const file = resolved === 'light' ? 'giscus-theme-light.css' : 'giscus-theme.css'
+    return `${window.location.origin}${import.meta.env.BASE_URL}${file}`.replace(
       /([^:]\/)\/+/g,
       '$1',
     )
-  }, [])
+  }, [resolved])
 
   return (
     <section className={styles.section} aria-label="Archive comments">
@@ -30,6 +33,7 @@ export function Comments({ term }: Props) {
       {isGiscusConfigured() ? (
         <div className={styles.frame}>
           <Giscus
+            key={themeHref}
             id="desk-giscus"
             repo={giscusConfig.repo as `${string}/${string}`}
             repoId={giscusConfig.repoId!}

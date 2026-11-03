@@ -11,7 +11,7 @@
   margin-right: calc(50% - 50vw + var(--inset));
   padding-bottom: clamp(2.5rem, 6vw, 4.5rem);
   box-sizing: border-box;
-  background: #080808;
+  background: var(--bg);
 }
 
 @media (min-width: 640px) {
@@ -43,8 +43,8 @@
   aspect-ratio: 4 / 3;
   min-height: 0;
   cursor: pointer;
-  background: #080808;
-  border: 1px solid #202020;
+  background: var(--plate);
+  border: 1px solid var(--plate-border);
   overflow: hidden;
   transition: border-color 320ms var(--ease-out);
 }

@@ -2,7 +2,7 @@
   position: fixed;
   inset: 0;
   z-index: 9500;
-  background: rgba(0, 0, 0, 0.94);
+  background: var(--scrim);
   display: grid;
   grid-template-rows: auto 1fr auto;
   padding: 1rem;

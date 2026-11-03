@@ -32,8 +32,8 @@
 }
 
 .frame {
-  border: 1px solid #202020;
-  background: #080808;
+  border: 1px solid var(--border);
+  background: var(--comments-frame);
   padding: clamp(0.75rem, 2vw, 1.25rem);
 }
 

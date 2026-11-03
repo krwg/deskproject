@@ -4,7 +4,7 @@
   z-index: 10000;
   display: grid;
   place-items: center;
-  background: #000;
+  background: var(--bg);
   color: var(--text);
   transition: opacity var(--dur) var(--ease-out), visibility var(--dur) var(--ease-out);
 }

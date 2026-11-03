@@ -21,7 +21,7 @@
   aspect-ratio: 16 / 9;
   min-height: clamp(22rem, 52vh, 34rem);
   border: 1px solid #202020;
-  background: #050505;
+  background: var(--plate-deep);
   overflow: hidden;
   overscroll-behavior: none;
   touch-action: none;
@@ -82,7 +82,7 @@
 
 .side {
   border: 1px solid #202020;
-  background: #080808;
+  background: var(--plate);
   padding: 0.75rem;
   display: grid;
   gap: 0.5rem;

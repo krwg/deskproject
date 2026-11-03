@@ -2,7 +2,7 @@
   position: fixed;
   inset: 0;
   z-index: 9600;
-  background: #050505;
+  background: var(--scrim);
   display: grid;
   grid-template-rows: auto 1fr;
   padding: 0;
@@ -153,7 +153,7 @@
   height: min(100%, calc(100dvh - 8.5rem));
   max-height: calc(100dvh - 8.5rem);
   border: none;
-  background: #000;
+  background: var(--plate-deep);
 }
 
 .frame :global(img),

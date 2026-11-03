@@ -20,6 +20,9 @@ body {
   background: var(--bg);
   color: var(--text);
   overflow-x: hidden;
+  transition:
+    background-color var(--dur) var(--ease-out),
+    color var(--dur) var(--ease-out);
 }
 
 ::selection {

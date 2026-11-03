@@ -12,7 +12,7 @@
   min-height: clamp(22rem, 58vh, 34rem);
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
-  background: #080808;
+  background: var(--plate);
   overflow: hidden;
 }
 
@@ -160,14 +160,14 @@
   grid-template-columns: 3.5rem 1fr;
   gap: 0.65rem;
   padding: 0.55rem;
-  background: #0e0e0e;
+  background: var(--plate-mid);
   border: 1px solid var(--border-strong);
   color: inherit;
 }
 
 .card[data-active='true'] {
   border-color: var(--text);
-  background: #121212;
+  background: var(--plate-elevated);
 }
 
 .cardAbove {

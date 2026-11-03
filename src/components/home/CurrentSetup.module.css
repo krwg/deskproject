@@ -119,7 +119,7 @@
   position: relative;
   aspect-ratio: 4 / 3;
   overflow: hidden;
-  background: #080808;
+  background: var(--plate);
   border: 1px solid #202020;
 }
 

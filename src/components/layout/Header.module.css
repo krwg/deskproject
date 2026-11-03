@@ -4,7 +4,7 @@
   z-index: 800;
   height: var(--header-h);
   border-bottom: 1px solid var(--border);
-  background: rgba(8, 8, 8, 0.88);
+  background: var(--header-bg);
   backdrop-filter: blur(10px);
 }
 
@@ -47,6 +47,13 @@
 
 .brandAuthor:hover {
   color: var(--text);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  min-width: 0;
 }
 
 .desktopNav {
@@ -93,7 +100,7 @@
 
 .menuBtn:hover {
   border-color: var(--border-strong);
-  background: #111;
+  background: var(--header-btn-hover);
 }
 
 .mobilePanel {
@@ -142,7 +149,7 @@
 @media (max-width: 767px) {
   .brand {
     gap: 0.3rem;
-    max-width: calc(100% - 4.5rem);
+    max-width: calc(100% - 7.5rem);
   }
 
   .brandTitle {

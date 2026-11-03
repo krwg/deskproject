@@ -1,5 +1,5 @@
 :root {
-  
+  /* Dark museum plate (default resolved theme until FOUC script runs) */
   --bg: #080808;
   --bg-elevated: #0a0a0a;
   --text: #f2f2f0;
@@ -10,7 +10,17 @@
   --surface-light: #eaeae8;
   --text-on-light: #111111;
 
-  
+  --header-bg: rgba(8, 8, 8, 0.88);
+  --header-btn-hover: #111111;
+  --plate: #080808;
+  --plate-deep: #050505;
+  --plate-elevated: #0c0c0c;
+  --plate-mid: #0e0e0e;
+  --plate-border: #202020;
+  --scrim: rgba(0, 0, 0, 0.94);
+  --comments-frame: #080808;
+  --shadow-soft: 0 12px 40px rgba(0, 0, 0, 0.35);
+
   --font-sans: 'Manrope', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   --font-mono: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
 
@@ -30,14 +40,12 @@
   --tracking-wide: 0.08em;
   --tracking-meta: 0.14em;
 
-  
   --page-pad: clamp(1rem, 3vw, 2.5rem);
   --max-w: 1440px;
   --header-h: 3.5rem;
   --radius: 0;
   --hairline: 1px;
 
-  
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-inout: cubic-bezier(0.65, 0, 0.35, 1);
   --dur-fast: 180ms;
@@ -45,6 +53,32 @@
   --dur-slow: 720ms;
 
   color-scheme: dark;
+}
+
+/* Cool daylight museum — white wall, black type, dark media plates */
+html[data-theme='light'] {
+  --bg: #f6f6f4;
+  --bg-elevated: #ffffff;
+  --text: #121212;
+  --text-muted: #6a6a6a;
+  --muted: #c8c8c4;
+  --border: #e4e4e0;
+  --border-strong: #cfcfc9;
+  --surface-light: #121212;
+  --text-on-light: #f6f6f4;
+
+  --header-bg: rgba(246, 246, 244, 0.9);
+  --header-btn-hover: #ecece8;
+  --plate: #111111;
+  --plate-deep: #0a0a0a;
+  --plate-elevated: #161616;
+  --plate-mid: #1a1a1a;
+  --plate-border: #2a2a2a;
+  --scrim: rgba(18, 18, 18, 0.88);
+  --comments-frame: #ffffff;
+  --shadow-soft: 0 16px 48px rgba(18, 18, 18, 0.08);
+
+  color-scheme: light;
 }
 
 @media (prefers-reduced-motion: reduce) {

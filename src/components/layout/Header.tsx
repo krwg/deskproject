@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { navItems, site } from '@/data/site'
+import { ThemeMenu } from './ThemeMenu'
 import styles from './Header.module.css'
 
 export function Header() {
@@ -35,32 +36,36 @@ export function Header() {
           </a>
         </div>
 
-        <nav className={styles.desktopNav} aria-label="Primary">
-          {navItems.map((item) => (
-            <NavLink
-              key={item.path}
-              to={item.path}
-              end={item.path === '/'}
-              className={({ isActive }) =>
-                [styles.navLink, isActive ? styles.active : '']
-                  .filter(Boolean)
-                  .join(' ')
-              }
-            >
-              {item.label}
-            </NavLink>
-          ))}
-        </nav>
+        <div className={styles.actions}>
+          <nav className={styles.desktopNav} aria-label="Primary">
+            {navItems.map((item) => (
+              <NavLink
+                key={item.path}
+                to={item.path}
+                end={item.path === '/'}
+                className={({ isActive }) =>
+                  [styles.navLink, isActive ? styles.active : '']
+                    .filter(Boolean)
+                    .join(' ')
+                }
+              >
+                {item.label}
+              </NavLink>
+            ))}
+          </nav>
 
-        <button
-          type="button"
-          className={styles.menuBtn}
-          aria-expanded={open}
-          aria-controls="mobile-nav"
-          onClick={() => setOpen((v) => !v)}
-        >
-          {open ? 'CLOSE' : 'MENU'}
-        </button>
+          <ThemeMenu />
+
+          <button
+            type="button"
+            className={styles.menuBtn}
+            aria-expanded={open}
+            aria-controls="mobile-nav"
+            onClick={() => setOpen((v) => !v)}
+          >
+            {open ? 'CLOSE' : 'MENU'}
+          </button>
+        </div>
       </div>
 
       {open && (

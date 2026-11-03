@@ -2,7 +2,7 @@
   position: relative;
   width: 100%;
   overflow: hidden;
-  background: #080808;
+  background: var(--plate);
   border: 0;
   content-visibility: auto;
   contain-intrinsic-size: 400px;
@@ -113,14 +113,14 @@
       rgba(41, 41, 41, 0.55) 23px,
       rgba(41, 41, 41, 0.55) 24px
     ),
-    #0c0c0c;
+    var(--plate-elevated);
 }
 
 .placeholderInner {
   text-align: center;
   padding: 1rem;
   border: 1px solid var(--border-strong);
-  background: rgba(8, 8, 8, 0.72);
+  background: color-mix(in srgb, var(--plate-deep) 72%, transparent);
 }
 
 .placeholderLabel {
