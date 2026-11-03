@@ -126,7 +126,7 @@ export function ArchiveMedia({
         </div>
       ) : !shouldLoad ? (
         <div className={styles.placeholder} aria-hidden />
-      ) : showVideoStill ? (
+      ) : showVideoStill && imageThumb ? (
         <img
           className={styles.media}
           src={assetUrl(imageThumb)}
