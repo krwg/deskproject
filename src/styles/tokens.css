@@ -21,6 +21,31 @@
   --comments-frame: #080808;
   --shadow-soft: 0 12px 40px rgba(0, 0, 0, 0.35);
 
+  /* Section rails / panels (Evolution, version log) */
+  --rail-bg: #080808;
+  --rail-grid: rgba(255, 255, 255, 0.035);
+  --rail-scan: rgba(242, 242, 240, 0.03);
+  --panel: #0e0e0e;
+  --panel-active: #121212;
+  --panel-hover-fg: #ffffff;
+
+  /* X-Ray plate */
+  --xray-bg: #050505;
+  --xray-border: #202020;
+  --xray-badge-bg: rgba(5, 5, 5, 0.72);
+  --xray-badge-fg: #d8d8d4;
+  --xray-badge-border: #2a2a2a;
+  --xray-scan: rgba(242, 242, 240, 0.05);
+  --xray-vignette: radial-gradient(ellipse at center, transparent 45%, rgba(0, 0, 0, 0.55) 100%),
+    linear-gradient(to top, rgba(0, 0, 0, 0.35), transparent 30%);
+
+  /* Photo lightbox always darkroom */
+  --lightbox-bg: #080808;
+  --lightbox-fg: #f2f2f0;
+  --lightbox-muted: #858585;
+  --lightbox-border: #3a3a3a;
+  --lightbox-btn: rgba(12, 12, 12, 0.92);
+
   --font-sans: 'Manrope', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   --font-mono: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
 
@@ -77,6 +102,22 @@ html[data-theme='light'] {
   --scrim: rgba(18, 18, 18, 0.88);
   --comments-frame: #ffffff;
   --shadow-soft: 0 16px 48px rgba(18, 18, 18, 0.08);
+
+  --rail-bg: #f6f6f4;
+  --rail-grid: rgba(18, 18, 18, 0.06);
+  --rail-scan: rgba(18, 18, 18, 0.04);
+  --panel: #ffffff;
+  --panel-active: #ffffff;
+  --panel-hover-fg: #121212;
+
+  --xray-bg: #f6f6f4;
+  --xray-border: #d8d8d4;
+  --xray-badge-bg: rgba(246, 246, 244, 0.88);
+  --xray-badge-fg: #3a3a3a;
+  --xray-badge-border: #cfcfc9;
+  --xray-scan: rgba(18, 18, 18, 0.05);
+  --xray-vignette: radial-gradient(ellipse at center, transparent 48%, rgba(18, 18, 18, 0.08) 100%),
+    linear-gradient(to top, rgba(18, 18, 18, 0.04), transparent 28%);
 
   color-scheme: light;
 }

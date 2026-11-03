@@ -2,7 +2,8 @@
   position: fixed;
   inset: 0;
   z-index: 9500;
-  background: var(--scrim);
+  background: var(--lightbox-bg);
+  color: var(--lightbox-fg);
   display: grid;
   grid-template-rows: auto 1fr auto;
   padding: 1rem;
@@ -33,18 +34,19 @@
   font-size: var(--fs-xs);
   letter-spacing: var(--tracking-meta);
   text-transform: uppercase;
-  color: var(--text-muted);
+  color: var(--lightbox-muted);
 }
 
 .close {
-  border: 1px solid var(--border-strong);
+  border: 1px solid var(--lightbox-border);
   padding: 0.55rem 0.85rem;
-  color: var(--text);
+  color: var(--lightbox-fg);
+  background: transparent;
 }
 
 .close:hover {
-  background: var(--text);
-  color: var(--bg);
+  background: var(--lightbox-fg);
+  color: var(--lightbox-bg);
 }
 
 .stage {
@@ -74,15 +76,15 @@
   pointer-events: auto;
   width: 2.75rem;
   height: 2.75rem;
-  border: 1px solid var(--border-strong);
-  background: rgba(8, 8, 8, 0.7);
-  color: var(--text);
+  border: 1px solid var(--lightbox-border);
+  background: var(--lightbox-btn);
+  color: var(--lightbox-fg);
   font-family: var(--font-mono);
 }
 
 .nav button:hover {
-  background: var(--text);
-  color: var(--bg);
+  background: var(--lightbox-fg);
+  color: var(--lightbox-bg);
 }
 
 .bottom {
@@ -94,7 +96,7 @@
   font-size: var(--fs-xs);
   letter-spacing: var(--tracking-meta);
   text-transform: uppercase;
-  color: var(--text-muted);
+  color: var(--lightbox-muted);
 }
 
 .caption {

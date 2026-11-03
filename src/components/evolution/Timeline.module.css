@@ -12,7 +12,7 @@
   min-height: clamp(22rem, 58vh, 34rem);
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
-  background: var(--plate);
+  background: var(--rail-bg);
   overflow: hidden;
 }
 
@@ -23,8 +23,8 @@
   pointer-events: none;
   opacity: 0.5;
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+    linear-gradient(var(--rail-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--rail-grid) 1px, transparent 1px);
   background-size: 56px 56px;
   background-position: 0 0;
 }
@@ -37,7 +37,7 @@
   background: linear-gradient(
     105deg,
     transparent 0%,
-    rgba(242, 242, 240, 0.03) 45%,
+    var(--rail-scan) 45%,
     transparent 55%
   );
   background-size: 220% 100%;
@@ -160,14 +160,15 @@
   grid-template-columns: 3.5rem 1fr;
   gap: 0.65rem;
   padding: 0.55rem;
-  background: var(--plate-mid);
+  background: var(--panel);
   border: 1px solid var(--border-strong);
   color: inherit;
+  box-shadow: var(--shadow-soft);
 }
 
 .card[data-active='true'] {
   border-color: var(--text);
-  background: var(--plate-elevated);
+  background: var(--panel-active);
 }
 
 .cardAbove {
@@ -229,7 +230,7 @@
 }
 
 .openBtn:hover {
-  color: #fff;
+  color: var(--panel-hover-fg);
 }
 
 .connector {

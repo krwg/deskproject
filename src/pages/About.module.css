@@ -86,7 +86,7 @@
   isolation: isolate;
   margin-top: clamp(2rem, 5vw, 3.5rem);
   border: 1px solid var(--border);
-  background: var(--plate-deep);
+  background: var(--rail-bg);
   overflow: hidden;
 }
 
@@ -116,11 +116,15 @@
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse at 30% 40%, transparent 20%, rgba(7, 7, 7, 0.55) 75%),
+    radial-gradient(
+      ellipse at 30% 40%,
+      transparent 20%,
+      color-mix(in srgb, var(--rail-bg) 55%, transparent) 75%
+    ),
     linear-gradient(
       105deg,
       transparent 0%,
-      rgba(242, 242, 240, 0.04) 46%,
+      var(--rail-scan) 46%,
       transparent 58%
     );
   background-size: 100% 100%, 220% 100%;

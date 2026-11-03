@@ -20,8 +20,8 @@
   
   aspect-ratio: 16 / 9;
   min-height: clamp(22rem, 52vh, 34rem);
-  border: 1px solid #202020;
-  background: var(--plate-deep);
+  border: 1px solid var(--xray-border);
+  background: var(--xray-bg);
   overflow: hidden;
   overscroll-behavior: none;
   touch-action: none;
@@ -47,7 +47,7 @@
   background: linear-gradient(
     180deg,
     transparent 0%,
-    rgba(242, 242, 240, 0.05) 48%,
+    var(--xray-scan) 48%,
     transparent 52%
   );
   background-size: 100% 220%;
@@ -59,9 +59,7 @@
   inset: 0;
   z-index: 2;
   pointer-events: none;
-  background:
-    radial-gradient(ellipse at center, transparent 45%, rgba(0, 0, 0, 0.55) 100%),
-    linear-gradient(to top, rgba(0, 0, 0, 0.35), transparent 30%);
+  background: var(--xray-vignette);
 }
 
 .badge {
@@ -70,19 +68,19 @@
   left: 0.75rem;
   z-index: 3;
   padding: 0.2rem 0.45rem;
-  border: 1px solid #2a2a2a;
-  background: rgba(5, 5, 5, 0.72);
+  border: 1px solid var(--xray-badge-border);
+  background: var(--xray-badge-bg);
   font-family: var(--font-mono);
   font-size: 0.62rem;
   letter-spacing: var(--tracking-meta);
   text-transform: uppercase;
-  color: #d8d8d4;
+  color: var(--xray-badge-fg);
   pointer-events: none;
 }
 
 .side {
-  border: 1px solid #202020;
-  background: var(--plate);
+  border: 1px solid var(--border);
+  background: var(--bg-elevated);
   padding: 0.75rem;
   display: grid;
   gap: 0.5rem;

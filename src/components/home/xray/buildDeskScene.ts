@@ -11,7 +11,7 @@ import {
   type Object3D,
 } from 'three'
 
-const LINE = 0xe8e8e4
+const DEFAULT_LINE = 0xe8e8e4
 
 const DESK = {
   w: 1.2,
@@ -356,17 +356,17 @@ function addChair(root: Group, mat: LineBasicMaterial, soft: LineBasicMaterial) 
   root.add(chair)
 }
 
-export function buildDeskScene() {
+export function buildDeskScene(lineColor: number = DEFAULT_LINE) {
   const root = new Group()
   root.name = 'desk-xray'
 
   const mat = new LineBasicMaterial({
-    color: LINE,
+    color: lineColor,
     transparent: true,
     opacity: 0.92,
   })
   const soft = new LineBasicMaterial({
-    color: LINE,
+    color: lineColor,
     transparent: true,
     opacity: 0.55,
   })

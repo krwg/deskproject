@@ -10,6 +10,7 @@ import {
 } from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion'
+import { useTheme } from '@/hooks/useTheme'
 import { buildDeskScene } from './buildDeskScene'
 import styles from './XRayCanvas.module.css'
 
@@ -17,16 +18,26 @@ type Props = {
   className?: string
 }
 
+const DARK_BG = 0x050505
+const LIGHT_BG = 0xf6f6f4
+const DARK_LINE = 0xe8e8e4
+const LIGHT_LINE = 0x121212
+
 export function XRayCanvas({ className }: Props) {
   const hostRef = useRef<HTMLDivElement>(null)
   const reduced = usePrefersReducedMotion()
+  const { resolved } = useTheme()
 
   useEffect(() => {
     const host = hostRef.current
     if (!host) return
 
+    const light = resolved === 'light'
+    const bg = light ? LIGHT_BG : DARK_BG
+    const line = light ? LIGHT_LINE : DARK_LINE
+
     const scene = new Scene()
-    scene.background = new Color(0x050505)
+    scene.background = new Color(bg)
 
     const camera = new PerspectiveCamera(32, 1, 0.05, 40)
 
@@ -36,14 +47,13 @@ export function XRayCanvas({ className }: Props) {
       powerPreference: 'high-performance',
     })
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-    renderer.setClearColor(0x050505, 1)
+    renderer.setClearColor(bg, 1)
     host.appendChild(renderer.domElement)
 
-    const { root, materials } = buildDeskScene()
+    const { root, materials } = buildDeskScene(line)
     scene.add(root)
     scene.add(new AmbientLight(0xffffff, 0.8))
 
-    
     const box = new Box3()
     root.traverse((obj) => {
       if (obj.name === 'chair') return
@@ -136,7 +146,7 @@ export function XRayCanvas({ className }: Props) {
         host.removeChild(renderer.domElement)
       }
     }
-  }, [reduced])
+  }, [reduced, resolved])
 
   return (
     <div
