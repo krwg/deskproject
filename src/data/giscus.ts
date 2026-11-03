@@ -1,4 +1,3 @@
-/** Public giscus IDs — baked in so GitHub Pages builds work without secrets. */
 const defaults = {
   repo: 'krwg/deskproject',
   repoId: 'R_kgDOVgrd7A',

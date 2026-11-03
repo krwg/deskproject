@@ -11,18 +11,14 @@ export type HomeBackgroundSlide = {
   id: string
   src: string
   thumbnail: string
-  /** Vertical background-position % — higher shows more of the lower frame. */
   focusY?: number
 }
 
 const disk = homeManifest as HomeManifest
 
-/** Hero plate slideshow — set covers under the title. */
 const HERO_BG_SET_IDS = ['38', '41', '42', '23', '19'] as const
 
-/** Per-set vertical crop bias (default CSS is center 63%). */
 const HERO_BG_FOCUS_Y: Partial<Record<(typeof HERO_BG_SET_IDS)[number], number>> = {
-  // Show ~17% more of the lower frame than the default hero crop.
   '41': 80,
 }
 
@@ -62,7 +58,6 @@ export function getHomeBackgroundSlides(): HomeBackgroundSlide[] {
   ]
 }
 
-/** @deprecated Prefer getHomeBackgroundSlides — kept for callers expecting one frame. */
 export function getHomeBackground(): { src: string; thumbnail: string } | null {
   return getHomeBackgroundSlides()[0] ?? null
 }

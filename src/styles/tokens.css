@@ -1,5 +1,8 @@
+/* ════════════════════════════════════════
+   TOKENS — DARK
+   ════════════════════════════════════════ */
+
 :root {
-  /* Dark museum plate (default resolved theme until FOUC script runs) */
   --bg: #080808;
   --bg-elevated: #0a0a0a;
   --text: #f2f2f0;
@@ -21,7 +24,6 @@
   --comments-frame: #080808;
   --shadow-soft: 0 12px 40px rgba(0, 0, 0, 0.35);
 
-  /* Section rails / panels (Evolution, version log) */
   --rail-bg: #080808;
   --rail-grid: rgba(255, 255, 255, 0.035);
   --rail-scan: rgba(242, 242, 240, 0.03);
@@ -29,7 +31,6 @@
   --panel-active: #121212;
   --panel-hover-fg: #ffffff;
 
-  /* X-Ray plate */
   --xray-bg: #050505;
   --xray-border: #202020;
   --xray-badge-bg: rgba(5, 5, 5, 0.72);
@@ -39,7 +40,6 @@
   --xray-vignette: radial-gradient(ellipse at center, transparent 45%, rgba(0, 0, 0, 0.55) 100%),
     linear-gradient(to top, rgba(0, 0, 0, 0.35), transparent 30%);
 
-  /* Photo lightbox always darkroom */
   --lightbox-bg: #080808;
   --lightbox-fg: #f2f2f0;
   --lightbox-muted: #858585;
@@ -80,7 +80,10 @@
   color-scheme: dark;
 }
 
-/* Cool daylight museum — white wall, black type, dark media plates */
+/* ════════════════════════════════════════
+   TOKENS — LIGHT
+   ════════════════════════════════════════ */
+
 html[data-theme='light'] {
   --bg: #f6f6f4;
   --bg-elevated: #ffffff;

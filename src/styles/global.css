@@ -1,6 +1,10 @@
 @import './tokens.css';
 @import './reset.css';
 
+/* ════════════════════════════════════════
+   LENIS
+   ════════════════════════════════════════ */
+
 html.lenis,
 html.lenis body {
   height: auto;
@@ -13,6 +17,10 @@ html.lenis body {
 .lenis.lenis-smooth [data-lenis-prevent] {
   overscroll-behavior: contain;
 }
+
+/* ════════════════════════════════════════
+   BASE
+   ════════════════════════════════════════ */
 
 body {
   font-family: var(--font-sans);
@@ -65,6 +73,10 @@ body {
   border: 0;
 }
 
+/* ════════════════════════════════════════
+   BUTTONS
+   ════════════════════════════════════════ */
+
 .btn {
   display: inline-flex;
   align-items: center;
@@ -110,6 +122,10 @@ body {
   border-color: var(--text);
 }
 
+/* ════════════════════════════════════════
+   SECTION CHROME
+   ════════════════════════════════════════ */
+
 .section-label {
   display: flex;
   align-items: baseline;
@@ -150,6 +166,10 @@ body {
   letter-spacing: var(--tracking-meta);
   text-transform: uppercase;
 }
+
+/* ════════════════════════════════════════
+   MOBILE
+   ════════════════════════════════════════ */
 
 @media (max-width: 767px) {
   .page-section {

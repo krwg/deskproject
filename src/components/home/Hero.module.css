@@ -142,7 +142,6 @@
   color: #f2f2f2;
 }
 
-/* Hero sits on photo — keep hover contrast independent of page theme */
 .actions :global(.btn:hover),
 .actions :global(.btn--light:hover) {
   background: #f2f2f0;

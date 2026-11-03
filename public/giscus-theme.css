@@ -1,7 +1,7 @@
-/*!
- * THE DESK PROJECT — custom Giscus theme
- * Tech Museum × Swiss Modernism
- */
+/* ════════════════════════════════════════
+   GISCUS — DARK
+   ════════════════════════════════════════ */
+
 main {
   --color-prettylights-syntax-comment: #6a6a6a;
   --color-prettylights-syntax-constant: #c8c8c8;

@@ -22,9 +22,7 @@ export function readThemePreference(): ThemePreference {
   try {
     const raw = localStorage.getItem(THEME_STORAGE_KEY)
     if (raw === 'light' || raw === 'dark' || raw === 'system') return raw
-  } catch {
-    /* ignore */
-  }
+  } catch {}
   return 'system'
 }
 
@@ -41,8 +39,6 @@ export function applyResolvedTheme(resolved: ResolvedTheme, pref: ThemePreferenc
 export function persistThemePreference(pref: ThemePreference) {
   try {
     localStorage.setItem(THEME_STORAGE_KEY, pref)
-  } catch {
-    /* ignore */
-  }
+  } catch {}
   applyResolvedTheme(resolveTheme(pref), pref)
 }
