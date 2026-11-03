@@ -1,12 +1,5 @@
 
 .root {
-  --parts-bg: #080808;
-  --parts-scan: rgba(242, 242, 240, 0.03);
-  --parts-line: #3a3a3a;
-  --parts-muted: #858585;
-  --parts-fg: #f2f2f0;
-  --parts-border: #292929;
-
   position: relative;
   margin-inline: calc(var(--page-pad) * -1);
   width: 100vw;
@@ -17,9 +10,9 @@
   margin-right: -50vw;
 
   min-height: clamp(22rem, 58vh, 34rem);
-  border-top: 1px solid var(--parts-border);
-  border-bottom: 1px solid var(--parts-border);
-  background: var(--parts-bg);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: var(--rail-bg);
   overflow: hidden;
 }
 
@@ -40,6 +33,11 @@
   animation: evolutionParts 64s linear infinite;
 }
 
+html[data-theme='light'] .bgParts {
+  filter: grayscale(1) invert(1) contrast(1.2) brightness(0.45);
+  opacity: 0.32;
+}
+
 .scan {
   position: absolute;
   inset: 0;
@@ -49,12 +47,12 @@
     radial-gradient(
       ellipse at 30% 40%,
       transparent 20%,
-      color-mix(in srgb, var(--parts-bg) 55%, transparent) 75%
+      color-mix(in srgb, var(--rail-bg) 55%, transparent) 75%
     ),
     linear-gradient(
       105deg,
       transparent 0%,
-      var(--parts-scan) 46%,
+      var(--rail-scan) 46%,
       transparent 58%
     );
   background-size: 100% 100%, 220% 100%;
@@ -113,7 +111,7 @@
   right: 0;
   top: 50%;
   height: 1px;
-  background: var(--parts-line);
+  background: var(--border-strong);
   z-index: 1;
   pointer-events: none;
 }
@@ -145,9 +143,9 @@
 .dot {
   width: 10px;
   height: 10px;
-  border: 1px solid var(--parts-muted);
+  border: 1px solid var(--text-muted);
   border-radius: 50%;
-  background: var(--parts-bg);
+  background: var(--bg);
   transition:
     background var(--dur-fast) var(--ease-out),
     border-color var(--dur-fast) var(--ease-out),
@@ -155,8 +153,8 @@
 }
 
 .nodeBtn[data-active='true'] .dot {
-  background: var(--parts-fg);
-  border-color: var(--parts-fg);
+  background: var(--text);
+  border-color: var(--text);
   transform: scale(1.12);
 }
 
@@ -170,11 +168,11 @@
   letter-spacing: 0.08em;
   text-transform: uppercase;
   white-space: nowrap;
-  color: var(--parts-muted);
+  color: var(--text-muted);
 }
 
 .nodeBtn[data-active='true'] .nodeLabel {
-  color: var(--parts-fg);
+  color: var(--text);
 }
 
 .card {
@@ -263,7 +261,7 @@
   position: absolute;
   left: 50%;
   width: 1px;
-  background: var(--parts-line);
+  background: var(--border-strong);
   transform: translateX(-50%);
   z-index: 2;
   pointer-events: none;
@@ -326,7 +324,7 @@
   font-size: var(--fs-xs);
   letter-spacing: var(--tracking-meta);
   text-transform: uppercase;
-  color: var(--parts-muted);
+  color: var(--muted);
 }
 
 @media (max-width: 720px) {

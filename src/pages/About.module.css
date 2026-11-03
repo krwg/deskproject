@@ -82,18 +82,11 @@
 }
 
 .versions {
-  --parts-bg: #080808;
-  --parts-scan: rgba(242, 242, 240, 0.03);
-  --parts-fg: #a3a3a0;
-  --parts-label: #858585;
-  --parts-border: #292929;
-
   position: relative;
   isolation: isolate;
   margin-top: clamp(2rem, 5vw, 3.5rem);
-  border: 1px solid var(--parts-border);
-  background: var(--parts-bg);
-  color: var(--parts-fg);
+  border: 1px solid var(--border);
+  background: var(--rail-bg);
   overflow: hidden;
 }
 
@@ -119,6 +112,11 @@
   animation: versionParts 64s linear infinite;
 }
 
+html[data-theme='light'] .versionsGrid {
+  filter: grayscale(1) invert(1) contrast(1.2) brightness(0.45);
+  opacity: 0.32;
+}
+
 .versionsScan {
   position: absolute;
   inset: 0;
@@ -126,12 +124,12 @@
     radial-gradient(
       ellipse at 30% 40%,
       transparent 20%,
-      color-mix(in srgb, var(--parts-bg) 55%, transparent) 75%
+      color-mix(in srgb, var(--rail-bg) 55%, transparent) 75%
     ),
     linear-gradient(
       105deg,
       transparent 0%,
-      var(--parts-scan) 46%,
+      var(--rail-scan) 46%,
       transparent 58%
     );
   background-size: 100% 100%, 220% 100%;
@@ -146,15 +144,11 @@
   padding: clamp(1.25rem, 3vw, 2rem);
 }
 
-.versions .label {
-  color: var(--parts-label);
-}
-
 .versionBody {
   margin: 0;
   max-width: 62ch;
   white-space: pre-wrap;
-  color: var(--parts-fg);
+  color: var(--text-muted);
   font-size: var(--fs-sm);
   line-height: 1.65;
 }
