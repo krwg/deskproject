@@ -19,10 +19,3 @@ export const navItems: NavItem[] = [
   { path: '/gallery', label: 'GALLERY', index: '03' },
   { path: '/about', label: 'ABOUT', index: '04' },
 ]
-
-export const galleryCategoryLabels: Record<string, string> = {
-  'full-setup': 'FULL SETUP',
-  details: 'DETAILS',
-  evolution: 'EVOLUTION',
-  'work-in-progress': 'WORK IN PROGRESS',
-}

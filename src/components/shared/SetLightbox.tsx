@@ -2,7 +2,6 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { startLenis, stopLenis } from '@/animations/lenisBridge'
 import { ArchiveMedia } from '@/components/shared/ArchiveMedia'
-import { galleryCategoryLabels } from '@/data/site'
 import { getSetMedia } from '@/data/sets'
 import type { MediaSet } from '@/types'
 import { padIndex } from '@/utils/assetUrl'
@@ -98,7 +97,7 @@ export function SetLightbox({ set, onClose, startIndex = null }: Props) {
         <div className={styles.gridWrap} data-lenis-prevent data-lenis-prevent-wheel>
           <div className={styles.gridMeta}>
             <span className={styles.gridTitle}>{set.title}</span>
-            <span>{galleryCategoryLabels[set.category]}</span>
+            <span>SET {set.folder}</span>
           </div>
 
           <div className={styles.grid}>

@@ -56,7 +56,7 @@ export const versionHistory: VersionHistoryEntry[] = [
     type: 'layout-changed',
     title: 'Gallery',
     description:
-      'Equal 4:3 tiles, hairline borders, category chips. Opening a set shows the full album, then a single-frame viewer.',
+      'Equal 4:3 tiles, hairline borders. Opening a set shows the full album, then a single-frame viewer.',
   },
   {
     id: 'v1-0-evolution',
