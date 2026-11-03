@@ -13,11 +13,26 @@
   gap: 1rem;
   padding: 1.5rem 0;
   border-bottom: 1px solid var(--border);
-  transition: background var(--dur-fast) var(--ease-out);
+  color: var(--text);
+  text-decoration: none;
+  transition:
+    background var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out);
 }
 
 .item:hover {
-  background: var(--plate-elevated);
+  background: var(--text);
+  color: var(--bg);
+}
+
+.item:hover .index,
+.item:hover .desc {
+  color: color-mix(in srgb, var(--bg) 62%, transparent);
+}
+
+.item:hover .title,
+.item:hover .cta {
+  color: var(--bg);
 }
 
 @media (min-width: 800px) {

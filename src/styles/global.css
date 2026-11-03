@@ -105,9 +105,9 @@ body {
 }
 
 .btn--light:hover {
-  background: transparent;
+  background: var(--bg);
   color: var(--text);
-  border-color: var(--border-strong);
+  border-color: var(--text);
 }
 
 .section-label {

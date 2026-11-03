@@ -230,7 +230,7 @@
 }
 
 .openBtn:hover {
-  color: var(--panel-hover-fg);
+  color: var(--text-muted);
 }
 
 .connector {
