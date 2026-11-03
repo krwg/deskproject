@@ -19,7 +19,7 @@ const disk = homeManifest as HomeManifest
 const HERO_BG_SET_IDS = ['38', '41', '42', '23', '19'] as const
 
 const HERO_BG_FOCUS_Y: Partial<Record<(typeof HERO_BG_SET_IDS)[number], number>> = {
-  '41': 80,
+  '41': 44,
 }
 
 export function getHomeBackgroundSlides(): HomeBackgroundSlide[] {

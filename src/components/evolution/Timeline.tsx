@@ -5,14 +5,12 @@ import {
   useState,
   type PointerEvent,
 } from 'react'
-import { gsap } from 'gsap'
 import { ArchiveMedia } from '@/components/shared/ArchiveMedia'
 import { SetLightbox } from '@/components/shared/SetLightbox'
 import { evolutionEntries } from '@/data/evolution'
 import { getSet } from '@/data/sets'
 import type { MediaSet } from '@/types'
 import { padIndex } from '@/utils/assetUrl'
-import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion'
 import styles from './Timeline.module.css'
 
 function isInteractiveTarget(target: EventTarget | null) {
@@ -27,8 +25,6 @@ export function Timeline() {
   const [index, setIndex] = useState(0)
   const [openSet, setOpenSet] = useState<MediaSet | null>(null)
   const scrollerRef = useRef<HTMLDivElement>(null)
-  const gridRef = useRef<HTMLDivElement>(null)
-  const reduced = usePrefersReducedMotion()
   const drag = useRef({ active: false, x: 0, left: 0 })
 
   const openEntry = useCallback(
@@ -71,20 +67,6 @@ export function Timeline() {
     return () => window.removeEventListener('keydown', onKey)
   }, [go, index, openSet])
 
-  useEffect(() => {
-    const grid = gridRef.current
-    if (!grid || reduced) return
-    const tween = gsap.to(grid, {
-      backgroundPosition: '56px 0',
-      duration: 18,
-      ease: 'none',
-      repeat: -1,
-    })
-    return () => {
-      tween.kill()
-    }
-  }, [reduced])
-
   const onPointerDown = (e: PointerEvent<HTMLDivElement>) => {
     if (e.button !== 0) return
     if (isInteractiveTarget(e.target)) return
@@ -112,7 +94,7 @@ export function Timeline() {
 
   return (
     <div className={styles.root}>
-      <div ref={gridRef} className={styles.bgGrid} aria-hidden />
+      <div className={styles.bgParts} aria-hidden />
       <div className={styles.scan} aria-hidden />
 
       <div

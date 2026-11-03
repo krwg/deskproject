@@ -1,5 +1,12 @@
 
 .root {
+  --parts-bg: #080808;
+  --parts-scan: rgba(242, 242, 240, 0.03);
+  --parts-line: #3a3a3a;
+  --parts-muted: #858585;
+  --parts-fg: #f2f2f0;
+  --parts-border: #292929;
+
   position: relative;
   margin-inline: calc(var(--page-pad) * -1);
   width: 100vw;
@@ -8,25 +15,29 @@
   right: 50%;
   margin-left: -50vw;
   margin-right: -50vw;
-  
+
   min-height: clamp(22rem, 58vh, 34rem);
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-  background: var(--rail-bg);
+  border-top: 1px solid var(--parts-border);
+  border-bottom: 1px solid var(--parts-border);
+  background: var(--parts-bg);
   overflow: hidden;
 }
 
-.bgGrid {
+.bgParts {
   position: absolute;
-  inset: 0;
+  inset: -55%;
   z-index: 0;
+  width: 210%;
+  height: 210%;
   pointer-events: none;
-  opacity: 0.5;
-  background-image:
-    linear-gradient(var(--rail-grid) 1px, transparent 1px),
-    linear-gradient(90deg, var(--rail-grid) 1px, transparent 1px);
-  background-size: 56px 56px;
-  background-position: 0 0;
+  opacity: 0.4;
+  background-color: transparent;
+  background-image: url('/images/xray/parts-pattern.svg');
+  background-repeat: repeat;
+  background-size: 640px 520px;
+  filter: grayscale(1) contrast(1.2) brightness(0.95);
+  transform-origin: center center;
+  animation: evolutionParts 64s linear infinite;
 }
 
 .scan {
@@ -34,22 +45,37 @@
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  background: linear-gradient(
-    105deg,
-    transparent 0%,
-    var(--rail-scan) 45%,
-    transparent 55%
-  );
-  background-size: 220% 100%;
-  animation: sweep 14s linear infinite;
+  background:
+    radial-gradient(
+      ellipse at 30% 40%,
+      transparent 20%,
+      color-mix(in srgb, var(--parts-bg) 55%, transparent) 75%
+    ),
+    linear-gradient(
+      105deg,
+      transparent 0%,
+      var(--parts-scan) 46%,
+      transparent 58%
+    );
+  background-size: 100% 100%, 220% 100%;
+  animation: evolutionScan 11s linear infinite;
 }
 
-@keyframes sweep {
+@keyframes evolutionParts {
   from {
-    background-position: 100% 0;
+    transform: translate3d(0, 0, 0) rotate(-18deg);
   }
   to {
-    background-position: -100% 0;
+    transform: translate3d(-640px, -260px, 0) rotate(-18deg);
+  }
+}
+
+@keyframes evolutionScan {
+  from {
+    background-position: 0 0, 120% 0;
+  }
+  to {
+    background-position: 0 0, -120% 0;
   }
 }
 
@@ -87,7 +113,7 @@
   right: 0;
   top: 50%;
   height: 1px;
-  background: var(--border-strong);
+  background: var(--parts-line);
   z-index: 1;
   pointer-events: none;
 }
@@ -119,9 +145,9 @@
 .dot {
   width: 10px;
   height: 10px;
-  border: 1px solid var(--text-muted);
+  border: 1px solid var(--parts-muted);
   border-radius: 50%;
-  background: var(--bg);
+  background: var(--parts-bg);
   transition:
     background var(--dur-fast) var(--ease-out),
     border-color var(--dur-fast) var(--ease-out),
@@ -129,8 +155,8 @@
 }
 
 .nodeBtn[data-active='true'] .dot {
-  background: var(--text);
-  border-color: var(--text);
+  background: var(--parts-fg);
+  border-color: var(--parts-fg);
   transform: scale(1.12);
 }
 
@@ -144,11 +170,11 @@
   letter-spacing: 0.08em;
   text-transform: uppercase;
   white-space: nowrap;
-  color: var(--text-muted);
+  color: var(--parts-muted);
 }
 
 .nodeBtn[data-active='true'] .nodeLabel {
-  color: var(--text);
+  color: var(--parts-fg);
 }
 
 .card {
@@ -237,7 +263,7 @@
   position: absolute;
   left: 50%;
   width: 1px;
-  background: var(--border-strong);
+  background: var(--parts-line);
   transform: translateX(-50%);
   z-index: 2;
   pointer-events: none;
@@ -300,7 +326,7 @@
   font-size: var(--fs-xs);
   letter-spacing: var(--tracking-meta);
   text-transform: uppercase;
-  color: var(--muted);
+  color: var(--parts-muted);
 }
 
 @media (max-width: 720px) {
@@ -369,9 +395,16 @@
     right: 0.65rem;
     bottom: 2.6rem;
   }
+
+  .bgParts {
+    opacity: 0.3;
+    background-size: 480px 390px;
+    inset: -50%;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .bgParts,
   .scan {
     animation: none;
   }
