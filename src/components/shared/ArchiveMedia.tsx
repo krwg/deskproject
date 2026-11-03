@@ -53,19 +53,26 @@ export function ArchiveMedia({
   const loopSec = media?.durationSec && media.durationSec > 0
     ? Math.min(media.durationSec, VIDEO_LOOP_SEC)
     : VIDEO_LOOP_SEC
+  const imageThumb: string | null =
+    media?.thumbnail &&
+    /\.(webp|jpe?g|png|gif|avif)$/i.test(media.thumbnail)
+      ? media.thumbnail
+      : null
+  // Lightbox/grid: still frame — paused <video> is often black without a real poster.
+  const showVideoStill = Boolean(
+    media?.kind === 'video' && !autoplay && imageThumb,
+  )
 
   useEffect(() => {
     const video = videoRef.current
-    if (!video || media?.kind !== 'video') return
+    if (!video || media?.kind !== 'video' || showVideoStill) return
 
     if (autoplay && inView) {
-      void video.play().catch(() => {
-        
-      })
+      void video.play().catch(() => {})
     } else {
       video.pause()
     }
-  }, [autoplay, inView, media?.kind])
+  }, [autoplay, inView, media?.kind, showVideoStill])
 
   const toneVars = mono && tone
     ? (toneToCssVars({
@@ -119,31 +126,38 @@ export function ArchiveMedia({
         </div>
       ) : !shouldLoad ? (
         <div className={styles.placeholder} aria-hidden />
+      ) : showVideoStill ? (
+        <img
+          className={styles.media}
+          src={assetUrl(imageThumb)}
+          alt={alt || media.caption || media.id}
+          loading={eager ? 'eager' : 'lazy'}
+          decoding="async"
+          onError={() => setFailed(true)}
+        />
       ) : media.kind === 'video' ? (
-        <>
-          <video
-            ref={videoRef}
-            className={styles.media}
-            src={assetUrl(media.src)}
-            poster={assetUrl(media.thumbnail)}
-            muted
-            playsInline
-            preload="metadata"
-            onError={() => setFailed(true)}
-            onTimeUpdate={(e) => {
-              const v = e.currentTarget
-              if (v.currentTime >= loopSec) {
-                v.currentTime = 0
-                void v.play().catch(() => {})
-              }
-            }}
-            onEnded={(e) => {
-              const v = e.currentTarget
+        <video
+          ref={videoRef}
+          className={styles.media}
+          src={assetUrl(media.src)}
+          poster={imageThumb ? assetUrl(imageThumb) : undefined}
+          muted
+          playsInline
+          preload="metadata"
+          onError={() => setFailed(true)}
+          onTimeUpdate={(e) => {
+            const v = e.currentTarget
+            if (v.currentTime >= loopSec) {
               v.currentTime = 0
               void v.play().catch(() => {})
-            }}
-          />
-        </>
+            }
+          }}
+          onEnded={(e) => {
+            const v = e.currentTarget
+            v.currentTime = 0
+            void v.play().catch(() => {})
+          }}
+        />
       ) : (
         <img
           className={styles.media}

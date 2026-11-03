@@ -365,13 +365,25 @@ async function processVideo(dir, folder, name) {
 
   if (sharp && hasFfmpeg && !(await fileFresh(outThumb, input))) {
     const posterTmp = path.join(os.tmpdir(), `tdp-${base}-poster-${Date.now()}.jpg`)
+    const thumbTmp = path.join(os.tmpdir(), `tdp-${base}-thumb-${Date.now()}.webp`)
     try {
+      // Seek past possible black intro frames on phone recordings.
       await execFileAsync(
         'ffmpeg',
-        ['-y', '-i', path.join(dir, srcName), '-frames:v', '1', '-q:v', '3', posterTmp],
+        [
+          '-y',
+          '-ss',
+          '0.35',
+          '-i',
+          path.join(dir, srcName),
+          '-frames:v',
+          '1',
+          '-q:v',
+          '3',
+          posterTmp,
+        ],
         { windowsHide: true },
       )
-      const thumbTmp = path.join(os.tmpdir(), `tdp-${base}-thumb-${Date.now()}.webp`)
       await sharp(posterTmp, { failOn: 'none' })
         .rotate()
         .resize({ width: 640, withoutEnlargement: true })
@@ -379,9 +391,10 @@ async function processVideo(dir, folder, name) {
         .toFile(thumbTmp)
       await replaceFile(thumbTmp, outThumb)
     } catch {
-      
+      // keep video without poster; UI falls back to looping playback
     } finally {
       await fs.unlink(posterTmp).catch(() => {})
+      await fs.unlink(thumbTmp).catch(() => {})
     }
   }
 
