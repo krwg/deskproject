@@ -57,6 +57,16 @@ export function AboutPage() {
         </div>
       </div>
 
+      <div className={styles.block}>
+        <div className={styles.label}>PRIVACY</div>
+        <p className={styles.text}>
+          No product analytics or trackers. Theme preference is stored in your
+          browser (<code>localStorage</code>). Comments use{' '}
+          <a href="https://giscus.app">Giscus</a> / GitHub Discussions — signing
+          in happens on GitHub&apos;s side when you choose to post.
+        </p>
+      </div>
+
       <section className={styles.versions} aria-label="Version history">
         <div className={styles.versionsBg} aria-hidden>
           <div className={styles.versionsGrid} />
