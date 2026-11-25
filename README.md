@@ -5,6 +5,10 @@
 <h1 align="center">THE DESK PROJECT</h1>
 
 <p align="center">
+  <a href="README.ru.md">Русский</a>
+</p>
+
+<p align="center">
   <strong>A digital archive of my workspace evolution.</strong><br/>
   Photographs · short loops · timeline · X-Ray desk<br/>
   by <a href="https://krwg.github.io/krwg/">krwg</a>
