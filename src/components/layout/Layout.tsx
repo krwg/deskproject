@@ -1,6 +1,7 @@
 import { Outlet, useLocation } from 'react-router-dom'
 import { Header } from './Header'
 import { Footer } from './Footer'
+import { PageMeta } from './PageMeta'
 import { Comments } from '@/components/shared/Comments'
 import { ScrollProgress } from '@/components/shared/ScrollProgress'
 import { useLenis } from '@/hooks/useLenis'
@@ -12,6 +13,7 @@ export function Layout() {
 
   return (
     <div className={styles.shell}>
+      <PageMeta />
       <ScrollProgress />
       <Header />
       <main className={styles.main}>

@@ -34,9 +34,13 @@ jobs:
       - name: Check set manifest
         run: npm run check:manifest
 
+      - name: Typecheck
+        run: npm run typecheck
+
       - name: Build
         env:
           VITE_BASE_PATH: /${{ github.event.repository.name }}/
+          VITE_SITE_URL: https://krwg.github.io/${{ github.event.repository.name }}
         run: npm run build
 
       - name: Publish to gh-pages

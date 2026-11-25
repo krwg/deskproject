@@ -5,10 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build && node scripts/copy-404.mjs",
+    "build": "tsc -b && vite build && node scripts/generate-seo.mjs && node scripts/copy-404.mjs",
     "preview": "vite preview",
     "images": "node scripts/process-images.mjs",
     "check:manifest": "node scripts/check-manifest.mjs",
+    "typecheck": "tsc -b --pretty false",
     "lint": "oxlint"
   },
   "dependencies": {
