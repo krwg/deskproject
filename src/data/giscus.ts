@@ -3,7 +3,7 @@ const defaults = {
   repoId: 'R_kgDOVgrd7A',
   category: 'General',
   categoryId: 'DIC_kwDOVgrd7M4DKQcR',
-  mapping: 'pathname',
+  mapping: 'specific',
 } as const
 
 export const giscusConfig = {
@@ -15,8 +15,7 @@ export const giscusConfig = {
   categoryId:
     (import.meta.env.VITE_GISCUS_CATEGORY_ID as string | undefined) ||
     defaults.categoryId,
-  mapping:
-    (import.meta.env.VITE_GISCUS_MAPPING as string | undefined) || defaults.mapping,
+  mapping: defaults.mapping,
 }
 
 export function isGiscusConfigured(): boolean {

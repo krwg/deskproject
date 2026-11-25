@@ -1,15 +1,23 @@
 import { useMemo } from 'react'
+import { useLocation } from 'react-router-dom'
 import Giscus from '@giscus/react'
 import { giscusConfig, isGiscusConfigured } from '@/data/giscus'
 import { useTheme } from '@/hooks/useTheme'
 import styles from './Comments.module.css'
 
-type Props = {
-  term?: string
+function pageDiscussionTerm(pathname: string): string {
+  const clean = pathname.replace(/\/+$/, '') || '/'
+  if (clean === '/' || clean.endsWith('/deskproject')) return 'page-home'
+  if (clean.endsWith('/evolution')) return 'page-evolution'
+  if (clean.endsWith('/gallery')) return 'page-gallery'
+  if (clean.endsWith('/about')) return 'page-about'
+  return `page-${clean.split('/').filter(Boolean).pop() || 'unknown'}`
 }
 
-export function Comments({ term }: Props) {
+export function Comments() {
+  const { pathname } = useLocation()
   const { resolved } = useTheme()
+  const term = pageDiscussionTerm(pathname)
 
   const themeHref = useMemo(() => {
     if (typeof window === 'undefined') return 'noborder_dark'
@@ -26,22 +34,23 @@ export function Comments({ term }: Props) {
         <div className={styles.kicker}>FIELD NOTES</div>
         <h2 className={styles.title}>COMMENTS</h2>
         <p className={styles.lead}>
-          Public log via GitHub Discussions. Sign in with GitHub to leave a note.
+          Public log via GitHub Discussions — one thread per page. Sign in with
+          GitHub to leave a note.
         </p>
       </div>
 
       {isGiscusConfigured() ? (
         <div className={styles.frame}>
           <Giscus
-            key={themeHref}
-            id="desk-giscus"
+            key={`${term}:${themeHref}`}
+            id={`desk-giscus-${term}`}
             repo={giscusConfig.repo as `${string}/${string}`}
             repoId={giscusConfig.repoId!}
             category={giscusConfig.category!}
             categoryId={giscusConfig.categoryId!}
-            mapping={(giscusConfig.mapping as 'pathname') || 'pathname'}
+            mapping="specific"
             term={term}
-            strict="0"
+            strict="1"
             reactionsEnabled="1"
             emitMetadata="0"
             inputPosition="bottom"

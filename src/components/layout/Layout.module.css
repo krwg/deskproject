@@ -9,6 +9,12 @@
   min-width: 0;
 }
 
+.comments {
+  width: min(100% - var(--page-pad) * 2, var(--max-w));
+  margin-inline: auto;
+  padding-bottom: clamp(2.5rem, 6vw, 4.5rem);
+}
+
 .pageEnter {
   animation: pageIn var(--dur) var(--ease-out);
 }

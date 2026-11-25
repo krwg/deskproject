@@ -40,7 +40,10 @@ flowchart LR
   G[Gallery] --> WALL[Equal 4:3 cover wall]
   WALL --> LB
   A[About] --> VH[Version history]
-  A --> NOTES[Giscus field notes]
+  H --> NOTES[Giscus per page]
+  E --> NOTES
+  G --> NOTES
+  A --> NOTES
 ```
 
 | Section | What you get |
@@ -48,7 +51,8 @@ flowchart LR
 | **Home** | Full-bleed hero with rotating set covers, Current Setup drag strip, project note, interactive **X-Ray** wireframe |
 | **Evolution** | Museum timeline — cards above / below the axis, **OPEN SET** opens that album |
 | **Gallery** | Equal **4:3** cover wall (responsive columns); click a set for clarifying frames and short video loops |
-| **About** | Statement, structure, version history, Giscus notes |
+| **About** | Statement, structure, version history |
+| **Comments** | Giscus on every page — separate GitHub Discussion per route (`page-home`, `page-gallery`, …) |
 
 There is no separate Hardware page. Old `/hardware` URLs fall through to Home.
 
@@ -102,7 +106,8 @@ Builds on the 1.0 public archive:
 - Light / Dark / System theme
 - Evolution timeline with OPEN SET
 - Gallery wall + SetLightbox
-- About + version history + Giscus
+- About + version history
+- Giscus field notes on every page (one discussion thread per route)
 - Mobile layout that leaves the desktop composition alone
 - Maintenance pass: aligned versioning, EN gallery sort, docs/CI/UX follow-ups
 
