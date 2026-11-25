@@ -1,3 +1,4 @@
+import { Comments } from '@/components/shared/Comments'
 import { site } from '@/data/site'
 import { versionHistory } from '@/data/versionHistory'
 import styles from './About.module.css'
@@ -69,6 +70,10 @@ export function AboutPage() {
           <p className={styles.versionBody}>{body}</p>
         </div>
       </section>
+
+      <div className={styles.comments}>
+        <Comments />
+      </div>
     </div>
   )
 }

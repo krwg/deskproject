@@ -173,10 +173,6 @@ export function getHeroSet(): MediaSet | undefined {
   )[0]
 }
 
-export function getSetByMainKey(_key: string): MediaSet | undefined {
-  return getHeroSet()
-}
-
 export function getSetMedia(set: MediaSet): MediaFile[] {
   return [set.main, ...set.items]
 }
@@ -187,13 +183,6 @@ export function getCurrentSetupSets(): MediaSet[] {
 
 export function getGallerySets(): MediaSet[] {
   return mediaSets.filter((s) => !s.awaiting)
-}
-
-export function getSetsByCategory(category: GalleryCategory) {
-  return sortSetsChrono(
-    mediaSets.filter((s) => s.category === category && !s.awaiting),
-    'asc',
-  )
 }
 
 export function flattenMedia(sets: MediaSet[] = mediaSets): MediaFile[] {
