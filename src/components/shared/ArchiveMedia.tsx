@@ -58,7 +58,6 @@ export function ArchiveMedia({
     /\.(webp|jpe?g|png|gif|avif)$/i.test(media.thumbnail)
       ? media.thumbnail
       : null
-  // Lightbox/grid: still frame — paused <video> is often black without a real poster.
   const showVideoStill = Boolean(
     media?.kind === 'video' && !autoplay && imageThumb,
   )

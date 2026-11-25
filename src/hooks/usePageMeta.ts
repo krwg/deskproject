@@ -5,7 +5,6 @@ import { absoluteUrl } from '@/utils/siteUrl'
 export type PageMetaInput = {
   title?: string
   description?: string
-  /** App path like `/gallery/10` (basename applied via absoluteUrl). */
   path?: string
   image?: string | null
   type?: 'website' | 'article'

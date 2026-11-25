@@ -7,6 +7,10 @@ import path from 'node:path'
 import { promisify } from 'node:util'
 import { fileURLToPath } from 'node:url'
 
+/* ════════════════════════════════════════
+   PATHS / EXT
+   ════════════════════════════════════════ */
+
 const execFileAsync = promisify(execFile)
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
@@ -20,6 +24,10 @@ const IMAGE_EXT = new Set(['.jpg', '.jpeg', '.png', '.webp', '.tif', '.tiff'])
 const VIDEO_EXT = new Set(['.mp4', '.webm', '.mov'])
 const SKIP_NAMES = new Set(['.gitkeep', 'readme.md', 'readme.txt'])
 const VIDEO_LOOP_SEC = 5
+
+/* ════════════════════════════════════════
+   TOOLING
+   ════════════════════════════════════════ */
 
 let sharp = null
 try {
@@ -48,6 +56,10 @@ try {
     'ffmpeg unavailable — videos keep originals; UI loops first 5s',
   )
 }
+
+/* ════════════════════════════════════════
+   HELPERS
+   ════════════════════════════════════════ */
 
 function stem(file) {
   return path.basename(file, path.extname(file)).replace(/-thumb$/i, '')
@@ -80,19 +92,16 @@ function isDerived(file) {
 }
 
 function dateFromFilename(name) {
-  
   let m = name.match(
     /(20\d{2})[-_.]?(\d{2})[-_.]?(\d{2})[_T\s-]+(\d{2})[-_.]?(\d{2})[-_.]?(\d{2})/,
   )
   if (m) {
     return `${m[1]}-${m[2]}-${m[3]}T${m[4]}:${m[5]}:${m[6]}`
   }
-  
   m = name.match(/(20\d{2})(\d{2})(\d{2})[_-](\d{2})(\d{2})(\d{2})/)
   if (m) {
     return `${m[1]}-${m[2]}-${m[3]}T${m[4]}:${m[5]}:${m[6]}`
   }
-  
   m = name.match(/(20\d{2})[-_.]?(\d{2})[-_.]?(\d{2})(?!\d)/)
   if (m) {
     return `${m[1]}-${m[2]}-${m[3]}`
@@ -105,7 +114,6 @@ async function dateFromExif(filePath) {
   try {
     const meta = await sharp(filePath, { failOn: 'none' }).metadata()
     if (!meta.exif) return null
-    
     const ascii = Buffer.from(meta.exif).toString('latin1')
     const m = ascii.match(
       /(20\d{2}):(\d{2}):(\d{2})[ T](\d{2}):(\d{2}):(\d{2})/,
@@ -137,8 +145,6 @@ async function resolveMediaDate(filePath, name) {
 }
 
 function pickSetDate(files) {
-  
-  
   const fromNames = files
     .map((f) => dateFromFilename(f.name))
     .filter(Boolean)
@@ -207,6 +213,10 @@ async function replaceFile(tmp, dest) {
   }
 }
 
+/* ════════════════════════════════════════
+   STILLS
+   ════════════════════════════════════════ */
+
 async function processStill(dir, publicSubdir, name) {
   const input = path.join(dir, name)
   const base = safeStem(name)
@@ -214,7 +224,6 @@ async function processStill(dir, publicSubdir, name) {
   const outThumb = path.join(dir, `${base}-thumb.webp`)
   const pub = `/images/${publicSubdir}`
 
-  
   const inputIsOutput =
     path.resolve(input).toLowerCase() === path.resolve(outWebp).toLowerCase()
 
@@ -312,6 +321,10 @@ async function processStill(dir, publicSubdir, name) {
   }
 }
 
+/* ════════════════════════════════════════
+   VIDEO
+   ════════════════════════════════════════ */
+
 async function processVideo(dir, folder, name) {
   const input = path.join(dir, name)
   const base = safeStem(name)
@@ -363,7 +376,6 @@ async function processVideo(dir, folder, name) {
     }
   }
 
-  // Always prefer the derived browser MP4 when it exists (even if ffmpeg is offline now).
   if (await fs.stat(outLoop).catch(() => null)) {
     srcName = loopName
   } else if (inputExt === '.mov') {
@@ -376,7 +388,6 @@ async function processVideo(dir, folder, name) {
     const posterTmp = path.join(os.tmpdir(), `tdp-${base}-poster-${Date.now()}.jpg`)
     const thumbTmp = path.join(os.tmpdir(), `tdp-${base}-thumb-${Date.now()}.webp`)
     try {
-      // Seek past possible black intro frames on phone recordings.
       await execFileAsync(
         'ffmpeg',
         [
@@ -400,7 +411,6 @@ async function processVideo(dir, folder, name) {
         .toFile(thumbTmp)
       await replaceFile(thumbTmp, outThumb)
     } catch {
-      // keep video without poster; UI falls back to looping playback
     } finally {
       await fs.unlink(posterTmp).catch(() => {})
       await fs.unlink(thumbTmp).catch(() => {})
@@ -436,6 +446,10 @@ function sortFiles(files) {
   })
 }
 
+/* ════════════════════════════════════════
+   HOME
+   ════════════════════════════════════════ */
+
 async function processHomeBackground() {
   await fs.mkdir(homeRoot, { recursive: true })
   const names = await listRawFiles(homeRoot)
@@ -444,7 +458,6 @@ async function processHomeBackground() {
     return IMAGE_EXT.has(e)
   })
 
-  
   const preferred =
     stills.find((n) => safeStem(n) === 'main') ??
     stills.sort((a, b) => a.localeCompare(b, undefined, { numeric: true }))[0]
@@ -484,6 +497,10 @@ async function processHomeBackground() {
   }
 }
 
+/* ════════════════════════════════════════
+   MAIN
+   ════════════════════════════════════════ */
+
 async function main() {
   await fs.mkdir(setsRoot, { recursive: true })
   const folders = await listSetFolders()
@@ -494,7 +511,6 @@ async function main() {
     const names = await listRawFiles(dir)
     const byName = new Map()
 
-    
     const safeWithSource = new Set(
       names
         .filter((n) => {
@@ -508,8 +524,6 @@ async function main() {
       const ext = path.extname(name).toLowerCase()
       const base = safeStem(name)
 
-      
-      
       if (ext === '.webp' && safeWithSource.has(base)) {
         continue
       }

@@ -1,4 +1,3 @@
-/** Public site origin including path base, no trailing slash. */
 export function siteOrigin(): string {
   const fromEnv = (import.meta.env.VITE_SITE_URL as string | undefined)?.replace(
     /\/+$/,
@@ -14,10 +13,6 @@ export function siteOrigin(): string {
   return 'https://krwg.github.io/deskproject'
 }
 
-/**
- * Absolute URL for an app path (`/gallery/10`) or asset path (`/images/...`).
- * Strips a duplicated BASE_URL prefix if present.
- */
 export function absoluteUrl(path: string): string {
   if (!path) return `${siteOrigin()}/`
   if (/^https?:\/\//i.test(path)) return path
