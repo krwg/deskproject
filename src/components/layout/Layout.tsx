@@ -5,12 +5,14 @@ import { Footer } from './Footer'
 import { PageMeta } from './PageMeta'
 import { Comments } from '@/components/shared/Comments'
 import { ScrollProgress } from '@/components/shared/ScrollProgress'
+import { useLocale } from '@/i18n/LocaleProvider'
 import { useLenis } from '@/hooks/useLenis'
 import styles from './Layout.module.css'
 
 export function Layout() {
   useLenis(true)
   const location = useLocation()
+  const { messages } = useLocale()
   const mainRef = useRef<HTMLElement>(null)
   const firstPath = useRef(location.pathname)
 
@@ -29,7 +31,7 @@ export function Layout() {
   return (
     <div className={styles.shell}>
       <a className={styles.skip} href="#main-content">
-        Skip to content
+        {messages.skipToContent}
       </a>
       <PageMeta />
       <ScrollProgress />

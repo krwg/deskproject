@@ -1,16 +1,16 @@
 import { Timeline } from '@/components/evolution/Timeline'
+import { useLocale } from '@/i18n/LocaleProvider'
 import styles from './Evolution.module.css'
 
 export function EvolutionPage() {
+  const { messages } = useLocale()
+
   return (
     <div className={`page ${styles.page}`}>
       <header className={styles.header}>
-        <div className={styles.kicker}>EVOLUTION</div>
-        <h1 className={styles.title}>WORKSPACE TIMELINE</h1>
-        <p className={styles.lead}>
-          Horizontal museum timeline. Cards sit above and below the axis —
-          open a set from the cover or OPEN SET.
-        </p>
+        <div className={styles.kicker}>{messages.evolution.kicker}</div>
+        <h1 className={styles.title}>{messages.evolution.title}</h1>
+        <p className={styles.lead}>{messages.evolution.lead}</p>
       </header>
       <Timeline />
     </div>

@@ -112,6 +112,7 @@ Builds on the 1.0 public archive:
 - WebP / thumbs, short muted video loops
 - Home hero slideshow + Current Setup + X-Ray
 - Light / Dark / System theme
+- EN / RU UI locale (header toggle, stored in `localStorage`)
 - Evolution timeline with OPEN SET
 - Gallery wall + SetLightbox
 - About + version history

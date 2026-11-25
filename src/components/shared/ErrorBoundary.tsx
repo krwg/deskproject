@@ -1,5 +1,6 @@
 import { Component, type ErrorInfo, type ReactNode } from 'react'
 import { site } from '@/data/site'
+import { formatMessage, getMessages, readLocale } from '@/i18n'
 import styles from './ErrorBoundary.module.css'
 
 type Props = {
@@ -31,17 +32,18 @@ export class ErrorBoundary extends Component<Props, State> {
   render() {
     if (!this.state.error) return this.props.children
 
+    const messages = getMessages(readLocale())
+
     return (
       <div className={styles.wrap} role="alert">
-        <div className={styles.kicker}>RUNTIME FAULT</div>
-        <h1 className={styles.title}>Something failed to render</h1>
+        <div className={styles.kicker}>{messages.error.kicker}</div>
+        <h1 className={styles.title}>{messages.error.title}</h1>
         <p className={styles.lead}>
-          {site.title} hit an unexpected error. You can reload the archive home
-          without losing the rest of the project.
+          {formatMessage(messages.error.lead, { title: site.title })}
         </p>
         <pre className={styles.detail}>{this.state.error.message}</pre>
         <button type="button" className="btn" onClick={this.recover}>
-          Reload home
+          {messages.error.reload}
         </button>
       </div>
     )

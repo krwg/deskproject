@@ -2,6 +2,7 @@ import { lazy, Suspense, useMemo } from 'react'
 import { useLocation } from 'react-router-dom'
 import { giscusConfig, isGiscusConfigured } from '@/data/giscus'
 import { useInView } from '@/hooks/useInView'
+import { useLocale } from '@/i18n/LocaleProvider'
 import { useTheme } from '@/hooks/useTheme'
 import styles from './Comments.module.css'
 
@@ -19,6 +20,7 @@ function pageDiscussionTerm(pathname: string): string {
 export function Comments() {
   const { pathname } = useLocation()
   const { resolved } = useTheme()
+  const { locale, messages } = useLocale()
   const term = pageDiscussionTerm(pathname)
   const { ref, inView } = useInView<HTMLElement>({
     rootMargin: '240px 0px',
@@ -35,22 +37,23 @@ export function Comments() {
   }, [resolved])
 
   return (
-    <section ref={ref} className={styles.section} aria-label="Archive comments">
+    <section ref={ref} className={styles.section} aria-label={messages.comments.aria}>
       <div className={styles.head}>
-        <div className={styles.kicker}>FIELD NOTES</div>
-        <h2 className={styles.title}>COMMENTS</h2>
-        <p className={styles.lead}>
-          Public log via GitHub Discussions — one thread per page. Sign in with
-          GitHub to leave a note.
-        </p>
+        <div className={styles.kicker}>{messages.comments.kicker}</div>
+        <h2 className={styles.title}>{messages.comments.title}</h2>
+        <p className={styles.lead}>{messages.comments.lead}</p>
       </div>
 
       {isGiscusConfigured() ? (
         inView ? (
           <div className={styles.frame}>
-            <Suspense fallback={<div className={styles.pending}>Loading comments…</div>}>
+            <Suspense
+              fallback={
+                <div className={styles.pending}>{messages.comments.loading}</div>
+              }
+            >
               <Giscus
-                key={`${term}:${themeHref}`}
+                key={`${term}:${themeHref}:${locale}`}
                 id={`desk-giscus-${term}`}
                 repo={giscusConfig.repo as `${string}/${string}`}
                 repoId={giscusConfig.repoId!}
@@ -63,24 +66,20 @@ export function Comments() {
                 emitMetadata="0"
                 inputPosition="bottom"
                 theme={themeHref}
-                lang="en"
+                lang={locale}
                 loading="lazy"
               />
             </Suspense>
           </div>
         ) : (
           <div className={styles.pending} aria-hidden>
-            Comments load when this section is near the viewport.
+            {messages.comments.deferred}
           </div>
         )
       ) : (
         <div className={styles.pending}>
-          <div className={styles.pendingLabel}>GISCUS NOT CONFIGURED</div>
-          <p>
-            Add <code>VITE_GISCUS_REPO</code>, <code>VITE_GISCUS_REPO_ID</code>,{' '}
-            <code>VITE_GISCUS_CATEGORY</code>, <code>VITE_GISCUS_CATEGORY_ID</code>{' '}
-            from <a href="https://giscus.app">giscus.app</a> to enable comments.
-          </p>
+          <div className={styles.pendingLabel}>{messages.comments.notConfigured}</div>
+          <p>{messages.comments.notConfiguredBody}</p>
         </div>
       )}
     </section>

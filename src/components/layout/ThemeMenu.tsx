@@ -1,6 +1,7 @@
 import { useEffect, useId, useRef, useState } from 'react'
+import { useLocale } from '@/i18n/LocaleProvider'
 import { useTheme } from '@/hooks/useTheme'
-import { THEME_OPTIONS, type ThemePreference } from '@/theme/theme'
+import { type ThemePreference } from '@/theme/theme'
 import styles from './ThemeMenu.module.css'
 
 function SunIcon() {
@@ -22,9 +23,16 @@ function MoonIcon() {
 
 export function ThemeMenu() {
   const { preference, resolved, setPreference } = useTheme()
+  const { messages, t } = useLocale()
   const [open, setOpen] = useState(false)
   const rootRef = useRef<HTMLDivElement>(null)
   const menuId = useId()
+
+  const options: { value: ThemePreference; label: string }[] = [
+    { value: 'light', label: messages.theme.light },
+    { value: 'dark', label: messages.theme.dark },
+    { value: 'system', label: messages.theme.system },
+  ]
 
   useEffect(() => {
     if (!open) return
@@ -55,16 +63,16 @@ export function ThemeMenu() {
         aria-haspopup="menu"
         aria-expanded={open}
         aria-controls={menuId}
-        aria-label={`Theme: ${preference}. Open theme menu`}
-        title="Theme"
+        aria-label={t(messages.theme.triggerAria, { pref: preference })}
+        title={messages.theme.title}
         onClick={() => setOpen((v) => !v)}
       >
         {resolved === 'light' ? <SunIcon /> : <MoonIcon />}
       </button>
 
       {open && (
-        <div className={styles.menu} id={menuId} role="menu" aria-label="Theme">
-          {THEME_OPTIONS.map((opt) => (
+        <div className={styles.menu} id={menuId} role="menu" aria-label={messages.theme.menuAria}>
+          {options.map((opt) => (
             <button
               key={opt.value}
               type="button"

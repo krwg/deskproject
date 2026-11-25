@@ -3,6 +3,8 @@ import { createPortal } from 'react-dom'
 import { startLenis, stopLenis } from '@/animations/lenisBridge'
 import { ArchiveMedia } from '@/components/shared/ArchiveMedia'
 import { getSetMedia } from '@/data/sets'
+import { displaySetTitle } from '@/i18n'
+import { useLocale } from '@/i18n/LocaleProvider'
 import type { MediaSet } from '@/types'
 import { padIndex } from '@/utils/assetUrl'
 import { absoluteUrl } from '@/utils/siteUrl'
@@ -26,6 +28,7 @@ export function SetLightbox({
   startIndex = null,
   onFrameChange,
 }: Props) {
+  const { messages, t } = useLocale()
   const media = useMemo(() => getSetMedia(set), [set])
   const clampedStart =
     startIndex == null
@@ -43,6 +46,7 @@ export function SetLightbox({
   const current = media[index]
   const titleId = `set-lightbox-title-${set.id}`
   const caption = set.caption?.trim() || ''
+  const setTitle = displaySetTitle(set.title, messages)
 
   useEffect(() => {
     restoreFocusRef.current =
@@ -180,7 +184,7 @@ export function SetLightbox({
         <div className={styles.topActions}>
           {mode === 'viewer' && (
             <button type="button" className={styles.back} onClick={backToGrid}>
-              ← GALLERY
+              {messages.lightbox.galleryBack}
             </button>
           )}
           <button
@@ -188,7 +192,7 @@ export function SetLightbox({
             className={styles.back}
             onClick={() => void copyLink()}
           >
-            {copied ? 'COPIED' : 'COPY LINK'}
+            {copied ? messages.lightbox.copied : messages.lightbox.copyLink}
           </button>
           <button
             ref={closeRef}
@@ -196,7 +200,7 @@ export function SetLightbox({
             className={styles.close}
             onClick={onClose}
           >
-            CLOSE / ESC
+            {messages.lightbox.close}
           </button>
         </div>
       </div>
@@ -206,7 +210,7 @@ export function SetLightbox({
           <div className={styles.gridMeta}>
             <div className={styles.gridHead}>
               <span className={styles.gridTitle} id={titleId}>
-                {set.title}
+                {setTitle}
               </span>
               {caption ? <p className={styles.gridCaption}>{caption}</p> : null}
             </div>
@@ -230,8 +234,16 @@ export function SetLightbox({
                   labelId={item.id}
                 />
                 <div className={styles.cellMeta}>
-                  <span>{i === 0 ? 'COVER' : `IMG ${padIndex(i)}`}</span>
-                  <span>{item.kind === 'video' ? 'VIDEO' : 'PHOTO'}</span>
+                  <span>
+                    {i === 0
+                      ? messages.lightbox.cover
+                      : t(messages.lightbox.img, { n: padIndex(i) })}
+                  </span>
+                  <span>
+                    {item.kind === 'video'
+                      ? messages.lightbox.video
+                      : messages.lightbox.photo}
+                  </span>
                 </div>
               </button>
             ))}
@@ -256,7 +268,7 @@ export function SetLightbox({
           }}
         >
           <span id={titleId} className={styles.srOnly}>
-            {set.title}
+            {setTitle}
           </span>
           <div className={styles.stage}>
             <div className={styles.frame}>
@@ -273,7 +285,7 @@ export function SetLightbox({
             <div className={styles.nav}>
               <button
                 type="button"
-                aria-label="Previous"
+                aria-label={messages.lightbox.previous}
                 disabled={index === 0}
                 onClick={() => goFrame(index - 1)}
               >
@@ -281,7 +293,7 @@ export function SetLightbox({
               </button>
               <button
                 type="button"
-                aria-label="Next"
+                aria-label={messages.lightbox.next}
                 disabled={index === media.length - 1}
                 onClick={() => goFrame(index + 1)}
               >
@@ -293,16 +305,18 @@ export function SetLightbox({
           <div className={styles.bottom}>
             <div className={styles.meta}>
               <span>
-                {index === 0 ? 'COVER' : `IMG ${padIndex(index)}`}
-                {current.kind === 'video' ? ' / LOOP' : ''}
+                {index === 0
+                  ? messages.lightbox.cover
+                  : t(messages.lightbox.img, { n: padIndex(index) })}
+                {current.kind === 'video' ? messages.lightbox.loop : ''}
               </span>
               <div className={styles.captionBlock}>
-                <span className={styles.caption}>{set.title}</span>
+                <span className={styles.caption}>{setTitle}</span>
                 {caption ? <span className={styles.captionNote}>{caption}</span> : null}
               </div>
             </div>
             {media.length > 1 && (
-              <div className={styles.thumbs} aria-label="Frames">
+              <div className={styles.thumbs} aria-label={messages.lightbox.frames}>
                 {media.map((item, i) => (
                   <button
                     key={item.id}
@@ -314,7 +328,7 @@ export function SetLightbox({
                       .filter(Boolean)
                       .join(' ')}
                     onClick={() => goFrame(i)}
-                    aria-label={`Open ${i + 1}`}
+                    aria-label={t(messages.lightbox.openFrame, { n: i + 1 })}
                     aria-current={i === index ? 'true' : undefined}
                   >
                     <ArchiveMedia

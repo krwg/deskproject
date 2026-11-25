@@ -1,12 +1,8 @@
-import { useEffect, useId, useRef, useState } from 'react'
+import { useEffect, useId, useMemo, useRef, useState } from 'react'
+import { useLocale } from '@/i18n/LocaleProvider'
 import styles from './GallerySort.module.css'
 
 export type GallerySortOrder = 'asc' | 'desc'
-
-const OPTIONS: { value: GallerySortOrder; label: string }[] = [
-  { value: 'asc', label: 'Oldest first' },
-  { value: 'desc', label: 'Newest first' },
-]
 
 type Props = {
   value: GallerySortOrder
@@ -14,10 +10,19 @@ type Props = {
 }
 
 export function GallerySort({ value, onChange }: Props) {
+  const { messages, t } = useLocale()
   const [open, setOpen] = useState(false)
   const rootRef = useRef<HTMLDivElement>(null)
   const menuId = useId()
-  const current = OPTIONS.find((o) => o.value === value) ?? OPTIONS[0]
+
+  const options = useMemo(
+    () => [
+      { value: 'asc' as const, label: messages.gallery.oldestFirst },
+      { value: 'desc' as const, label: messages.gallery.newestFirst },
+    ],
+    [messages],
+  )
+  const current = options.find((o) => o.value === value) ?? options[0]
 
   useEffect(() => {
     if (!open) return
@@ -48,7 +53,7 @@ export function GallerySort({ value, onChange }: Props) {
         aria-haspopup="menu"
         aria-expanded={open}
         aria-controls={menuId}
-        aria-label={`Sort: ${current.label}`}
+        aria-label={t(messages.gallery.sortAria, { label: current.label })}
         onClick={() => setOpen((v) => !v)}
       >
         <span className={styles.triggerLabel}>{current.label}</span>
@@ -58,8 +63,13 @@ export function GallerySort({ value, onChange }: Props) {
       </button>
 
       {open && (
-        <div className={styles.menu} id={menuId} role="menu" aria-label="Sort">
-          {OPTIONS.map((opt) => (
+        <div
+          className={styles.menu}
+          id={menuId}
+          role="menu"
+          aria-label={messages.gallery.sortMenu}
+        >
+          {options.map((opt) => (
             <button
               key={opt.value}
               type="button"

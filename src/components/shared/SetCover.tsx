@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom'
 import { ArchiveMedia } from '@/components/shared/ArchiveMedia'
+import { displaySetTitle } from '@/i18n'
+import { useLocale } from '@/i18n/LocaleProvider'
 import type { MediaSet } from '@/types'
 import styles from './SetCover.module.css'
 
@@ -22,6 +24,9 @@ export function SetCover({
   showLabel = true,
   fill = false,
 }: Props) {
+  const { messages, t } = useLocale()
+  const title = displaySetTitle(set.title, messages)
+
   const media = (
     <ArchiveMedia
       media={set.main}
@@ -35,7 +40,7 @@ export function SetCover({
       mono
       fill={fill}
       tone={set.tone}
-      alt={set.title}
+      alt={title}
     />
   )
 
@@ -45,7 +50,10 @@ export function SetCover({
     <Link
       to={`/gallery/${set.id}`}
       className={styles.link}
-      aria-label={`Open set ${set.folder}: ${set.title}`}
+      aria-label={t(messages.set.openAria, {
+        folder: set.folder,
+        title,
+      })}
     >
       {media}
     </Link>

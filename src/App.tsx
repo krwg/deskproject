@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { Layout } from '@/components/layout/Layout'
 import { ErrorBoundary } from '@/components/shared/ErrorBoundary'
 import { LoadingScreen } from '@/components/shared/LoadingScreen'
+import { LocaleProvider } from '@/i18n/LocaleProvider'
 
 const HomePage = lazy(() =>
   import('@/pages/Home').then((m) => ({ default: m.HomePage })),
@@ -26,23 +27,25 @@ export default function App() {
 
   return (
     <ErrorBoundary>
-      <BrowserRouter basename={import.meta.env.BASE_URL}>
-        <LoadingScreen onComplete={onComplete} />
-        {ready && (
-          <Suspense fallback={null}>
-            <Routes>
-              <Route element={<Layout />}>
-                <Route index element={<HomePage />} />
-                <Route path="evolution" element={<EvolutionPage />} />
-                <Route path="gallery" element={<GalleryPage />} />
-                <Route path="gallery/:setId" element={<GalleryPage />} />
-                <Route path="about" element={<AboutPage />} />
-                <Route path="*" element={<NotFoundPage />} />
-              </Route>
-            </Routes>
-          </Suspense>
-        )}
-      </BrowserRouter>
+      <LocaleProvider>
+        <BrowserRouter basename={import.meta.env.BASE_URL}>
+          <LoadingScreen onComplete={onComplete} />
+          {ready && (
+            <Suspense fallback={null}>
+              <Routes>
+                <Route element={<Layout />}>
+                  <Route index element={<HomePage />} />
+                  <Route path="evolution" element={<EvolutionPage />} />
+                  <Route path="gallery" element={<GalleryPage />} />
+                  <Route path="gallery/:setId" element={<GalleryPage />} />
+                  <Route path="about" element={<AboutPage />} />
+                  <Route path="*" element={<NotFoundPage />} />
+                </Route>
+              </Routes>
+            </Suspense>
+          )}
+        </BrowserRouter>
+      </LocaleProvider>
     </ErrorBoundary>
   )
 }

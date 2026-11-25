@@ -31,6 +31,9 @@
           document.documentElement.style.colorScheme = resolved
           var meta = document.querySelector('meta[name="theme-color"]')
           if (meta) meta.setAttribute('content', resolved === 'light' ? '#f6f6f4' : '#080808')
+          var loc = localStorage.getItem('desk-locale') || 'en'
+          if (loc !== 'en' && loc !== 'ru') loc = 'en'
+          document.documentElement.lang = loc
         } catch (e) {}
       })()
     </script>

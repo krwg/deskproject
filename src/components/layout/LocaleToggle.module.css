@@ -1,0 +1,32 @@
+.root {
+  display: inline-flex;
+  border: 1px solid var(--border);
+  background: var(--bg);
+}
+
+.btn {
+  min-width: 2.35rem;
+  padding: 0.45rem 0.55rem;
+  border: 0;
+  background: transparent;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: var(--tracking-meta);
+  text-transform: uppercase;
+}
+
+.btn:hover {
+  color: var(--text);
+}
+
+.active {
+  color: var(--bg);
+  background: var(--text);
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--text);
+  outline-offset: 2px;
+  z-index: 1;
+}

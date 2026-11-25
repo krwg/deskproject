@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type CSSProperties } from 'react'
 import type { ImageTone, MediaFile } from '@/types'
 import { toneToCssVars } from '@/data/tones'
+import { useLocale } from '@/i18n/LocaleProvider'
 import { assetUrl } from '@/utils/assetUrl'
 import { useInView } from '@/hooks/useInView'
 import styles from './ArchiveMedia.module.css'
@@ -42,6 +43,7 @@ export function ArchiveMedia({
   fill = false,
   tone = null,
 }: Props) {
+  const { messages } = useLocale()
   const [failed, setFailed] = useState(false)
   const { ref, inView } = useInView<HTMLElement>({
     rootMargin: '280px 0px',
@@ -116,9 +118,9 @@ export function ArchiveMedia({
           <div className={styles.wire} aria-hidden />
           {showLabel && (
             <div className={styles.placeholderInner}>
-              <div className={styles.placeholderLabel}>AWAITING ASSET</div>
+              <div className={styles.placeholderLabel}>{messages.media.awaiting}</div>
               <div className={styles.placeholderMeta}>
-                {labelId || media?.id || 'UNASSIGNED'}
+                {labelId || media?.id || messages.media.unassigned}
               </div>
             </div>
           )}

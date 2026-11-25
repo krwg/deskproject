@@ -3,8 +3,12 @@ import { createRoot } from 'react-dom/client'
 
 import '@fontsource/manrope/latin-400.css'
 import '@fontsource/manrope/latin-500.css'
+import '@fontsource/manrope/cyrillic-400.css'
+import '@fontsource/manrope/cyrillic-500.css'
 import '@fontsource/jetbrains-mono/latin-400.css'
 import '@fontsource/jetbrains-mono/latin-500.css'
+import '@fontsource/jetbrains-mono/cyrillic-400.css'
+import '@fontsource/jetbrains-mono/cyrillic-500.css'
 
 import '@/styles/global.css'
 import 'lenis/dist/lenis.css'

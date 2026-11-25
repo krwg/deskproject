@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom'
 import { ArchiveMedia } from '@/components/shared/ArchiveMedia'
 import { evolutionEntries } from '@/data/evolution'
 import { getSet } from '@/data/sets'
+import { useLocale } from '@/i18n/LocaleProvider'
 import { padIndex } from '@/utils/assetUrl'
 import styles from './Timeline.module.css'
 
@@ -22,6 +23,7 @@ function isInteractiveTarget(target: EventTarget | null) {
 export function Timeline() {
   const entries = evolutionEntries
   const navigate = useNavigate()
+  const { messages, t } = useLocale()
   const [index, setIndex] = useState(0)
   const scrollerRef = useRef<HTMLDivElement>(null)
   const drag = useRef({ active: false, x: 0, left: 0 })
@@ -134,7 +136,7 @@ export function Timeline() {
                     type="button"
                     className={styles.cardThumb}
                     data-no-drag
-                    aria-label={`Open ${label}`}
+                    aria-label={t(messages.evolution.openSetAria, { label })}
                     onClick={(e) => {
                       e.stopPropagation()
                       openEntry(i)
@@ -162,7 +164,7 @@ export function Timeline() {
                         openEntry(i)
                       }}
                     >
-                      OPEN SET →
+                      {messages.evolution.openSet}
                     </button>
                   </div>
                 </article>
@@ -172,7 +174,7 @@ export function Timeline() {
                   className={styles.nodeBtn}
                   data-active={i === index}
                   onClick={() => go(i)}
-                  aria-label={`Go to ${label}`}
+                  aria-label={t(messages.evolution.goToAria, { label })}
                 >
                   <span className={styles.dot} />
                   <span className={styles.nodeLabel}>
@@ -185,10 +187,10 @@ export function Timeline() {
         </div>
       </div>
 
-      <div className={styles.controls} aria-label="Timeline navigation">
+      <div className={styles.controls} aria-label={messages.evolution.navAria}>
         <button
           type="button"
-          aria-label="Previous"
+          aria-label={messages.evolution.previous}
           disabled={index === 0}
           onClick={() => go(index - 1)}
         >
@@ -196,7 +198,7 @@ export function Timeline() {
         </button>
         <button
           type="button"
-          aria-label="Next"
+          aria-label={messages.evolution.next}
           disabled={index === entries.length - 1}
           onClick={() => go(index + 1)}
         >
@@ -205,8 +207,10 @@ export function Timeline() {
       </div>
 
       <div className={styles.hint}>
-        ENTRY {padIndex(index + 1, 2)} / {padIndex(entries.length, 2)} / DRAG /
-        SWIPE
+        {t(messages.evolution.hint, {
+          current: padIndex(index + 1, 2),
+          total: padIndex(entries.length, 2),
+        })}
       </div>
     </div>
   )

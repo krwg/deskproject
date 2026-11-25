@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { getHeroSet } from '@/data/sets'
+import { useLocale } from '@/i18n/LocaleProvider'
 import { assetUrl } from '@/utils/assetUrl'
 import styles from './LoadingScreen.module.css'
 
@@ -8,12 +9,6 @@ const SESSION_KEY = 'tdp-archive-initialized'
 type Props = {
   onComplete: () => void
 }
-
-const PHASES = [
-  'INDEXING SETS...',
-  'INITIALIZING INTERFACE...',
-  'PREPARING ARCHIVE...',
-] as const
 
 async function loadCritical(): Promise<void> {
   const tasks: Promise<unknown>[] = []
@@ -48,6 +43,9 @@ async function loadCritical(): Promise<void> {
 }
 
 export function LoadingScreen({ onComplete }: Props) {
+  const { messages } = useLocale()
+  const phases = messages.loading.phases
+
   const skip = useMemo(() => {
     try {
       return sessionStorage.getItem(SESSION_KEY) === '1'
@@ -76,7 +74,7 @@ export function LoadingScreen({ onComplete }: Props) {
       const tick = () => {
         if (cancelled) return
         setProgress((p) => (p >= 90 ? p : Math.min(90, p + 2.5)))
-        setPhaseIdx((i) => (i + 1) % PHASES.length)
+        setPhaseIdx((i) => (i + 1) % phases.length)
         raf = window.setTimeout(tick, 220)
       }
       tick()
@@ -86,7 +84,7 @@ export function LoadingScreen({ onComplete }: Props) {
 
       window.clearTimeout(raf)
       setProgress(100)
-      setPhaseIdx(PHASES.length - 1)
+      setPhaseIdx(phases.length - 1)
 
       const elapsed = performance.now() - start
       await new Promise((r) => setTimeout(r, Math.max(0, minVisible - elapsed)))
@@ -107,7 +105,7 @@ export function LoadingScreen({ onComplete }: Props) {
       cancelled = true
       window.clearTimeout(raf)
     }
-  }, [skip, onComplete])
+  }, [skip, onComplete, phases.length])
 
   if (skip && done) return null
 
@@ -122,17 +120,17 @@ export function LoadingScreen({ onComplete }: Props) {
       <div className={styles.panel}>
         <div className={styles.brand}>
           <div className={styles.title}>THE DESK PROJECT / krwg</div>
-          <div className={styles.author}>INITIALIZING ARCHIVE</div>
+          <div className={styles.author}>{messages.loading.initializing}</div>
         </div>
 
-        <div className={styles.status}>LOADING ARCHIVE</div>
+        <div className={styles.status}>{messages.loading.status}</div>
 
         <div className={styles.barTrack} aria-hidden>
           <div className={styles.barFill} style={{ width: `${progress}%` }} />
         </div>
 
         <div className={styles.row}>
-          <span className={styles.phase}>{PHASES[phaseIdx]}</span>
+          <span className={styles.phase}>{phases[phaseIdx]}</span>
           <span className={styles.pct}>{Math.round(progress)}%</span>
         </div>
       </div>

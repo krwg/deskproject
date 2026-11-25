@@ -7,6 +7,7 @@ import {
 } from '@/components/gallery/GallerySort'
 import { SetLightbox } from '@/components/shared/SetLightbox'
 import { flattenMedia, getGallerySets, getSet, sortSetsChrono } from '@/data/sets'
+import { useLocale } from '@/i18n/LocaleProvider'
 import { padIndex } from '@/utils/assetUrl'
 import styles from './Gallery.module.css'
 
@@ -14,6 +15,7 @@ export function GalleryPage() {
   const { setId } = useParams()
   const navigate = useNavigate()
   const [searchParams, setSearchParams] = useSearchParams()
+  const { messages, t } = useLocale()
   const [order, setOrder] = useState<GallerySortOrder>('asc')
   const sets = useMemo(
     () => sortSetsChrono(getGallerySets(), order),
@@ -51,17 +53,17 @@ export function GalleryPage() {
     <div className={styles.page}>
       <div className={styles.rail}>
         <header className={styles.header}>
-          <div className={styles.kicker}>GALLERY</div>
-          <h1 className={styles.title}>PHOTOGRAPHIC ARCHIVE</h1>
-          <p className={styles.lead}>
-            Covers only. Click a set to open clarifying frames and short loops —
-            each folder is one specimen in the chronological hall.
-          </p>
+          <div className={styles.kicker}>{messages.gallery.kicker}</div>
+          <h1 className={styles.title}>{messages.gallery.title}</h1>
+          <p className={styles.lead}>{messages.gallery.lead}</p>
         </header>
 
         <div className={styles.metaRow}>
           <div className={styles.count}>
-            SETS {padIndex(sets.length)} / MEDIA {padIndex(mediaCount)}
+            {t(messages.gallery.setsMedia, {
+              sets: padIndex(sets.length),
+              media: padIndex(mediaCount),
+            })}
           </div>
           <GallerySort value={order} onChange={setOrder} />
         </div>

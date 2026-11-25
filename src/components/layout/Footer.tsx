@@ -1,11 +1,15 @@
 import { Link } from 'react-router-dom'
+import { localizedNav } from '@/data/nav'
 import { getGallerySets } from '@/data/sets'
-import { navItems, site } from '@/data/site'
+import { site } from '@/data/site'
+import { useLocale } from '@/i18n/LocaleProvider'
 import { padIndex } from '@/utils/assetUrl'
 import styles from './Footer.module.css'
 
 export function Footer() {
+  const { messages, t } = useLocale()
   const setCount = getGallerySets().length
+  const items = localizedNav(messages)
 
   return (
     <footer className={styles.footer}>
@@ -15,10 +19,10 @@ export function Footer() {
             <div className={styles.title}>
               {site.title} / {site.author}
             </div>
-            <div className={styles.meta}>{site.tagline}</div>
+            <div className={styles.meta}>{messages.site.tagline}</div>
           </div>
           <nav className={styles.nav} aria-label="Footer">
-            {navItems.map((item) => (
+            {items.map((item) => (
               <Link key={item.path} to={item.path}>
                 {item.label}
               </Link>
@@ -27,8 +31,12 @@ export function Footer() {
         </div>
         <div className={styles.bottom}>
           <span>
-            ARCHIVE {site.archiveFrom}–{site.archiveTo} · {padIndex(setCount)}{' '}
-            SETS · VERSION [{site.version}]
+            {t(messages.footer.archiveLine, {
+              from: site.archiveFrom,
+              to: site.archiveTo,
+              sets: padIndex(setCount),
+              version: site.version,
+            })}
           </span>
           <a href={site.authorUrl} target="_blank" rel="noreferrer">
             / {site.author}

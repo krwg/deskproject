@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { SetCover } from '@/components/shared/SetCover'
+import { useLocale } from '@/i18n/LocaleProvider'
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion'
 import type { MediaSet } from '@/types'
 import styles from './GalleryGrid.module.css'
@@ -15,6 +16,7 @@ type Props = {
 export function GalleryGrid({ sets }: Props) {
   const rootRef = useRef<HTMLDivElement>(null)
   const reduced = usePrefersReducedMotion()
+  const { messages, t } = useLocale()
 
   useEffect(() => {
     const root = rootRef.current
@@ -48,8 +50,7 @@ export function GalleryGrid({ sets }: Props) {
   if (sets.length === 0) {
     return (
       <div className={`empty-note ${styles.empty}`}>
-        NO SETS YET — DROP MEDIA INTO public/images/sets/NN/ THEN RUN npm run
-        images
+        {messages.gallery.empty}
       </div>
     )
   }
@@ -71,7 +72,11 @@ export function GalleryGrid({ sets }: Props) {
             />
           </div>
           <div className={styles.meta}>
-            <span>{set.items.length + 1} MEDIA</span>
+            <span>
+              {t(messages.gallery.mediaCount, {
+                count: set.items.length + 1,
+              })}
+            </span>
           </div>
         </article>
       ))}

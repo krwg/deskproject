@@ -1,12 +1,17 @@
 import { useEffect, useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
-import { navItems, site } from '@/data/site'
+import { localizedNav } from '@/data/nav'
+import { site } from '@/data/site'
+import { useLocale } from '@/i18n/LocaleProvider'
+import { LocaleToggle } from './LocaleToggle'
 import { ThemeMenu } from './ThemeMenu'
 import styles from './Header.module.css'
 
 export function Header() {
   const [open, setOpen] = useState(false)
   const location = useLocation()
+  const { messages } = useLocale()
+  const items = localizedNav(messages)
 
   useEffect(() => {
     setOpen(false)
@@ -23,7 +28,7 @@ export function Header() {
     <header className={styles.header}>
       <div className={styles.inner}>
         <div className={styles.brand}>
-          <Link to="/" className={styles.brandTitle} aria-label={`${site.title} home`}>
+          <Link to="/" className={styles.brandTitle} aria-label={messages.brand.homeAria}>
             {site.title}
           </Link>
           <a
@@ -37,8 +42,8 @@ export function Header() {
         </div>
 
         <div className={styles.actions}>
-          <nav className={styles.desktopNav} aria-label="Primary">
-            {navItems.map((item) => (
+          <nav className={styles.desktopNav} aria-label={messages.nav.primary}>
+            {items.map((item) => (
               <NavLink
                 key={item.path}
                 to={item.path}
@@ -54,6 +59,7 @@ export function Header() {
             ))}
           </nav>
 
+          <LocaleToggle />
           <ThemeMenu />
 
           <button
@@ -63,14 +69,14 @@ export function Header() {
             aria-controls="mobile-nav"
             onClick={() => setOpen((v) => !v)}
           >
-            {open ? 'CLOSE' : 'MENU'}
+            {open ? messages.nav.close : messages.nav.menu}
           </button>
         </div>
       </div>
 
       {open && (
-        <nav id="mobile-nav" className={styles.mobilePanel} aria-label="Mobile">
-          {navItems.map((item) => (
+        <nav id="mobile-nav" className={styles.mobilePanel} aria-label={messages.nav.mobile}>
+          {items.map((item) => (
             <NavLink
               key={item.path}
               to={item.path}

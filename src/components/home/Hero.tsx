@@ -4,6 +4,7 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { getHomeBackgroundSlides } from '@/data/home'
 import { site } from '@/data/site'
+import { useLocale } from '@/i18n/LocaleProvider'
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion'
 import { assetUrl } from '@/utils/assetUrl'
 import styles from './Hero.module.css'
@@ -17,6 +18,7 @@ export function Hero() {
   const rootRef = useRef<HTMLElement>(null)
   const stackRef = useRef<HTMLDivElement>(null)
   const reduced = usePrefersReducedMotion()
+  const { messages } = useLocale()
   const slides = useMemo(() => getHomeBackgroundSlides(), [])
   const urls = useMemo(() => slides.map((s) => assetUrl(s.src)), [slides])
 
@@ -205,15 +207,15 @@ export function Hero() {
           </div>
 
           <p className={styles.tagline} data-hero-anim>
-            {site.shortTagline}
+            {messages.site.shortTagline}
           </p>
 
           <div className={styles.actions} data-hero-anim>
             <Link className="btn btn--light" to="/evolution">
-              ENTER EVOLUTION
+              {messages.hero.enterEvolution}
             </Link>
             <Link className="btn" to="/gallery">
-              OPEN GALLERY
+              {messages.hero.openGallery}
             </Link>
           </div>
         </div>
@@ -225,7 +227,7 @@ export function Hero() {
           onClick={scrollToArchive}
         >
           <span className={styles.scrollLine} aria-hidden />
-          <span>SCROLL TO ARCHIVE</span>
+          <span>{messages.hero.scrollToArchive}</span>
           <span className={styles.scrollLine} aria-hidden />
         </button>
       </div>

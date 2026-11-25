@@ -7,6 +7,7 @@ import {
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { SetCover } from '@/components/shared/SetCover'
+import { useLocale } from '@/i18n/LocaleProvider'
 import { getCurrentSetupSets } from '@/data/sets'
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion'
 import styles from './CurrentSetup.module.css'
@@ -18,6 +19,7 @@ export function CurrentSetup() {
   const scrollerRef = useRef<HTMLDivElement>(null)
   const trackRef = useRef<HTMLDivElement>(null)
   const reduced = usePrefersReducedMotion()
+  const { messages } = useLocale()
   const shots = getCurrentSetupSets()
   const drag = useRef({
     active: false,
@@ -152,15 +154,14 @@ export function CurrentSetup() {
       <div className={`page ${styles.header}`}>
         <div className="section-label">
           <span className="section-label__index">01</span>
-          <h2 className="section-label__title">CURRENT SETUP</h2>
+          <h2 className="section-label__title">{messages.home.currentSetup}</h2>
         </div>
-        <p className={styles.hint}>DRAG / SCROLL →</p>
+        <p className={styles.hint}>{messages.home.dragScroll}</p>
       </div>
 
       {shots.length === 0 ? (
         <div className={`page empty-note ${styles.empty}`}>
-          NO HOME SETS YET — drop media into public/images/sets/NN/ then run
-          npm run images
+          {messages.home.noHomeSets}
         </div>
       ) : (
         <div
