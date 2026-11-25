@@ -95,6 +95,8 @@ Pipeline (`npm run images`) builds WebP + thumbnails. The UI uses:
 
 That keeps the archive usable as set count grows; it is not a substitute for measuring LCP/CLS on a real device after large additions.
 
+`sets.manifest.json` is fetched as its own asset (not inlined into the main JS chunk) so the critical bundle stays smaller as the archive grows.
+
 ---
 
 ## Version 1.1.0

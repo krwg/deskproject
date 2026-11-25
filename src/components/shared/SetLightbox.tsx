@@ -10,11 +10,13 @@ import styles from './SetLightbox.module.css'
 type Props = {
   set: MediaSet
   onClose: () => void
-  
   startIndex?: number | null
 }
 
 type Mode = 'grid' | 'viewer'
+
+const FOCUSABLE =
+  'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
 
 export function SetLightbox({ set, onClose, startIndex = null }: Props) {
   const media = useMemo(() => getSetMedia(set), [set])
@@ -23,22 +25,38 @@ export function SetLightbox({ set, onClose, startIndex = null }: Props) {
   )
   const [index, setIndex] = useState(startIndex ?? 0)
   const touchX = useRef<number | null>(null)
+  const overlayRef = useRef<HTMLDivElement>(null)
+  const closeRef = useRef<HTMLButtonElement>(null)
+  const restoreFocusRef = useRef<HTMLElement | null>(null)
   const current = media[index]
+  const titleId = `set-lightbox-title-${set.id}`
 
   useEffect(() => {
+    restoreFocusRef.current =
+      document.activeElement instanceof HTMLElement
+        ? document.activeElement
+        : null
+
     const prev = document.body.style.overflow
     document.body.style.overflow = 'hidden'
     stopLenis()
 
+    const focusTimer = window.setTimeout(() => {
+      closeRef.current?.focus()
+    }, 0)
+
     return () => {
+      window.clearTimeout(focusTimer)
       document.body.style.overflow = prev
       startLenis()
+      restoreFocusRef.current?.focus?.()
     }
   }, [])
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
+        e.stopPropagation()
         if (mode === 'viewer') {
           setMode('grid')
           return
@@ -46,14 +64,38 @@ export function SetLightbox({ set, onClose, startIndex = null }: Props) {
         onClose()
         return
       }
+
+      if (e.key === 'Tab' && overlayRef.current) {
+        const nodes = [
+          ...overlayRef.current.querySelectorAll<HTMLElement>(FOCUSABLE),
+        ].filter((el) => !el.hasAttribute('disabled') && el.tabIndex !== -1)
+        if (nodes.length === 0) {
+          e.preventDefault()
+          return
+        }
+        const first = nodes[0]
+        const last = nodes[nodes.length - 1]
+        const active = document.activeElement as HTMLElement | null
+        if (e.shiftKey) {
+          if (active === first || !overlayRef.current.contains(active)) {
+            e.preventDefault()
+            last.focus()
+          }
+        } else if (active === last || !overlayRef.current.contains(active)) {
+          e.preventDefault()
+          first.focus()
+        }
+        return
+      }
+
       if (mode !== 'viewer') return
       if (e.key === 'ArrowLeft') setIndex((i) => Math.max(0, i - 1))
       if (e.key === 'ArrowRight')
         setIndex((i) => Math.min(media.length - 1, i + 1))
     }
 
-    window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
+    window.addEventListener('keydown', onKey, true)
+    return () => window.removeEventListener('keydown', onKey, true)
   }, [media.length, mode, onClose])
 
   const openViewer = (i: number) => {
@@ -63,10 +105,11 @@ export function SetLightbox({ set, onClose, startIndex = null }: Props) {
 
   const ui = (
     <div
+      ref={overlayRef}
       className={styles.overlay}
       role="dialog"
       aria-modal="true"
-      aria-label={set.title}
+      aria-labelledby={titleId}
       data-lenis-prevent
       data-lenis-prevent-wheel
     >
@@ -87,7 +130,12 @@ export function SetLightbox({ set, onClose, startIndex = null }: Props) {
               ← GALLERY
             </button>
           )}
-          <button type="button" className={styles.close} onClick={onClose}>
+          <button
+            ref={closeRef}
+            type="button"
+            className={styles.close}
+            onClick={onClose}
+          >
             CLOSE / ESC
           </button>
         </div>
@@ -96,7 +144,9 @@ export function SetLightbox({ set, onClose, startIndex = null }: Props) {
       {mode === 'grid' ? (
         <div className={styles.gridWrap} data-lenis-prevent data-lenis-prevent-wheel>
           <div className={styles.gridMeta}>
-            <span className={styles.gridTitle}>{set.title}</span>
+            <span className={styles.gridTitle} id={titleId}>
+              {set.title}
+            </span>
             <span>SET {set.folder}</span>
           </div>
 
@@ -139,6 +189,9 @@ export function SetLightbox({ set, onClose, startIndex = null }: Props) {
             else setIndex((i) => Math.max(0, i - 1))
           }}
         >
+          <span id={titleId} className={styles.srOnly}>
+            {set.title}
+          </span>
           <div className={styles.stage}>
             <div className={styles.frame}>
               <ArchiveMedia
@@ -193,6 +246,7 @@ export function SetLightbox({ set, onClose, startIndex = null }: Props) {
                       .join(' ')}
                     onClick={() => setIndex(i)}
                     aria-label={`Open ${i + 1}`}
+                    aria-current={i === index ? 'true' : undefined}
                   >
                     <ArchiveMedia
                       media={item}

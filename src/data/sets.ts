@@ -7,7 +7,7 @@ import type {
 } from '@/types'
 import { setsMetaOverrides } from './sets.meta'
 import { resolveTone } from './tones'
-import manifest from './sets.manifest.json'
+import manifestUrl from './sets.manifest.json?url'
 
 type ManifestFile = {
   name: string
@@ -21,7 +21,6 @@ type ManifestFile = {
 
 type ManifestSet = {
   folder: string
-  
   date?: string | null
   files: ManifestFile[]
 }
@@ -33,7 +32,7 @@ type Manifest = {
 
 export const MAX_SET_FOLDERS = 60
 
-const disk = manifest as Manifest
+const disk = (await (await fetch(manifestUrl)).json()) as Manifest
 
 export function numericSetId(id: string): number {
   const n = Number.parseInt(id, 10)
@@ -60,10 +59,7 @@ function defaultPlacements(id: string, allIdsSortedAsc: string[]): SetPlacement[
   const index = allIdsSortedAsc.indexOf(id)
   const showOn: SetPlacement[] = ['gallery', 'evolution']
 
-  
   if (id === newest) showOn.push('hero')
-
-  
   if (index >= Math.max(0, newestIndex - 5)) showOn.push('home')
 
   return showOn
@@ -84,7 +80,6 @@ function autoMeta(id: string, allIdsSortedAsc: string[]): MediaSetMeta {
     id,
     title: override.title ?? `Entry ${id}`,
     caption: override.caption ?? '',
-    
     date: override.date ?? fromDisk,
     category: override.category ?? defaultCategory(id, allIdsSortedAsc),
     showOn: defaultPlacements(id, allIdsSortedAsc),
@@ -113,8 +108,7 @@ function toMediaFile(folder: string, file: ManifestFile): MediaFile {
     awaiting: false,
     width: file.width ?? undefined,
     height: file.height ?? undefined,
-    durationSec:
-      file.kind === 'video' ? (file.durationSec ?? 5) : null,
+    durationSec: file.kind === 'video' ? (file.durationSec ?? 5) : null,
   }
 }
 
