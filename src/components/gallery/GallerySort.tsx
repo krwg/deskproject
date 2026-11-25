@@ -4,8 +4,8 @@ import styles from './GallerySort.module.css'
 export type GallerySortOrder = 'asc' | 'desc'
 
 const OPTIONS: { value: GallerySortOrder; label: string }[] = [
-  { value: 'asc', label: 'От старых к новым' },
-  { value: 'desc', label: 'От новых к старым' },
+  { value: 'asc', label: 'Oldest first' },
+  { value: 'desc', label: 'Newest first' },
 ]
 
 type Props = {

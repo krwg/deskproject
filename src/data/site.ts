@@ -8,7 +8,7 @@ export const site = {
   shortTagline: 'A DIGITAL ARCHIVE OF MY WORKSPACE.',
   status: 'ACTIVE',
   configLabel: 'CURRENT CONFIGURATION',
-  version: '1.0',
+  version: '1.1.0',
   intro:
     'This project documents the evolution of my personal workspace — from a simple laptop setup to a fully developed workstation.',
 } as const

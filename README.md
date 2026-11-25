@@ -12,7 +12,7 @@
 
 <p align="center">
   <a href="https://krwg.github.io/deskproject/"><img src="https://img.shields.io/badge/live-krwg.github.io%2Fdeskproject-111111?style=for-the-badge&labelColor=080808" alt="Live site" /></a>
-  <img src="https://img.shields.io/badge/version-1.0-eaeae8?style=for-the-badge&labelColor=080808" alt="Version 1.0" />
+  <img src="https://img.shields.io/badge/version-1.1.0-eaeae8?style=for-the-badge&labelColor=080808" alt="Version 1.1.0" />
   <img src="https://img.shields.io/badge/license-Apache%202.0-3a3a3a?style=for-the-badge&labelColor=080808" alt="Apache 2.0" />
 </p>
 
@@ -91,11 +91,11 @@ That keeps the archive usable as set count grows; it is not a substitute for mea
 
 ---
 
-## Version 1.0
+## Version 1.1.0
 
-Public foundation of the project:
+Builds on the 1.0 public archive:
 
-- Vite + React SPA on GitHub Pages
+- Same Vite + React SPA on GitHub Pages
 - Folder sets with automatic discovery after the image pipeline
 - WebP / thumbs, short muted video loops
 - Home hero slideshow + Current Setup + X-Ray
@@ -104,6 +104,7 @@ Public foundation of the project:
 - Gallery wall + SetLightbox
 - About + version history + Giscus
 - Mobile layout that leaves the desktop composition alone
+- Maintenance pass: aligned versioning, EN gallery sort, docs/CI/UX follow-ups
 
 ---
 

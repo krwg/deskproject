@@ -2,6 +2,15 @@ import type { VersionHistoryEntry } from '@/types'
 
 export const versionHistory: VersionHistoryEntry[] = [
   {
+    id: 'v1-1-0',
+    date: '2026-11',
+    type: 'other',
+    title: '[1.1.0] Maintenance',
+    description:
+      'Version strings unified to 1.1.0. English gallery sort labels. Follow-up work on set deep links, docs, CI checks, and archive UX.',
+    relatedSetIds: [],
+  },
+  {
     id: 'v1-0',
     date: '2026-11',
     type: 'other',
