@@ -16,4 +16,5 @@ npm.cmd run images
 
 Даты берутся из имён файлов / EXIF.  
 Своё название/дату — опционально в `src/data/sets.meta.ts`.  
-Полная инструкция: [`CONTENT.md`](../../../CONTENT.md)
+Полная инструкция (EN): [`CONTENT.md`](../../../CONTENT.md)  
+Проверка манифеста: `npm run check:manifest`

@@ -28,6 +28,12 @@ jobs:
       - name: Install
         run: npm ci
 
+      - name: Lint
+        run: npm run lint
+
+      - name: Check set manifest
+        run: npm run check:manifest
+
       - name: Build
         env:
           VITE_BASE_PATH: /${{ github.event.repository.name }}/
