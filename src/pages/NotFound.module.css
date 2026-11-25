@@ -1,0 +1,32 @@
+.page {
+  padding-block: clamp(3rem, 10vw, 7rem);
+  display: grid;
+  gap: 1rem;
+  max-width: 36rem;
+}
+
+.kicker {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: var(--tracking-meta);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.title {
+  font-size: var(--fs-xl);
+  letter-spacing: var(--tracking-tight);
+}
+
+.lead {
+  line-height: var(--lh-body);
+  color: var(--text-muted);
+  max-width: 42ch;
+}
+
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
