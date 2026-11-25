@@ -1,0 +1,1 @@
+import{i as e,n as t}from"./jsx-runtime-DyZJNswf.js";var n=e(t(),1),r=`(prefers-reduced-motion: reduce)`;function i(){let[e,t]=(0,n.useState)(()=>typeof window>`u`?!1:window.matchMedia(r).matches);return(0,n.useEffect)(()=>{let e=window.matchMedia(r),n=()=>t(e.matches);return n(),e.addEventListener(`change`,n),()=>e.removeEventListener(`change`,n)},[]),e}export{i as t};

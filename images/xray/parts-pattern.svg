@@ -1,0 +1,226 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="520" viewBox="0 0 640 520" fill="none">
+  <defs>
+    <g id="iso-box" stroke="#e8e8e4" stroke-width="1" fill="none">
+      <!-- unit isometric brick helper drawn inline per part -->
+    </g>
+  </defs>
+
+  <!-- ========== GPU A — dual-slot, 3 fans, isometric ========== -->
+  <g opacity="0.58" stroke="#e8e8e4" stroke-width="1" fill="none" transform="translate(40 36)">
+    <!-- top face -->
+    <path d="M20 40 L140 10 L210 40 L90 70 Z"/>
+    <!-- left face -->
+    <path d="M20 40 L20 88 L90 118 L90 70 Z"/>
+    <!-- right face -->
+    <path d="M90 70 L210 40 L210 88 L90 118 Z"/>
+    <!-- PCB recess on top -->
+    <path d="M48 46 L130 24 L168 42 L86 64 Z" opacity="0.85"/>
+    <!-- fans on top (ellipses for iso) -->
+    <ellipse cx="72" cy="48" rx="16" ry="9"/>
+    <ellipse cx="72" cy="48" rx="5" ry="3"/>
+    <ellipse cx="112" cy="38" rx="16" ry="9"/>
+    <ellipse cx="112" cy="38" rx="5" ry="3"/>
+    <ellipse cx="152" cy="28" rx="16" ry="9"/>
+    <ellipse cx="152" cy="28" rx="5" ry="3"/>
+    <!-- heatsink fins -->
+    <path d="M55 52 L95 62M65 49 L105 59M75 46 L115 56" opacity="0.7"/>
+    <!-- PCIe teeth -->
+    <path d="M28 92 L38 96 L38 104 L28 100 Z"/>
+    <path d="M42 98 L52 102 L52 110 L42 106 Z"/>
+    <path d="M56 104 L66 108 L66 116 L56 112 Z"/>
+    <!-- IO bracket -->
+    <path d="M20 40 L12 44 L12 92 L20 88"/>
+    <path d="M14 52h6M14 62h6M14 72h6"/>
+  </g>
+
+  <!-- ========== GPU B — blower style ========== -->
+  <g opacity="0.52" stroke="#e8e8e4" stroke-width="1" fill="none" transform="translate(280 20)">
+    <path d="M30 50 L120 20 L170 45 L80 75 Z"/>
+    <path d="M30 50 L30 95 L80 120 L80 75 Z"/>
+    <path d="M80 75 L170 45 L170 90 L80 120 Z"/>
+    <!-- single large blower -->
+    <ellipse cx="95" cy="58" rx="28" ry="15"/>
+    <ellipse cx="95" cy="58" rx="10" ry="5"/>
+    <path d="M95 43 L95 53M95 63 L95 73M75 58 L85 58M105 58 L115 58" opacity="0.75"/>
+    <!-- power plugs -->
+    <path d="M130 32 L145 38 L145 48 L130 42 Z"/>
+    <path d="M148 36 L158 41 L158 51 L148 46 Z"/>
+    <path d="M34 98 L48 104 L48 112 L34 106 Z"/>
+  </g>
+
+  <!-- ========== GPU C — compact ITX ========== -->
+  <g opacity="0.5" stroke="#e8e8e4" stroke-width="1" fill="none" transform="translate(470 48)">
+    <path d="M10 40 L70 18 L110 40 L50 62 Z"/>
+    <path d="M10 40 L10 72 L50 94 L50 62 Z"/>
+    <path d="M50 62 L110 40 L110 72 L50 94 Z"/>
+    <ellipse cx="55" cy="48" rx="18" ry="10"/>
+    <ellipse cx="55" cy="48" rx="6" ry="3"/>
+    <path d="M14 78 L28 84 L28 90 L14 84 Z"/>
+  </g>
+
+  <!-- ========== CPU A — with IHS + pins iso ========== -->
+  <g opacity="0.55" stroke="#e8e8e4" stroke-width="1" fill="none" transform="translate(50 170)">
+    <path d="M40 40 L90 20 L140 40 L90 60 Z"/>
+    <path d="M40 40 L40 70 L90 90 L90 60 Z"/>
+    <path d="M90 60 L140 40 L140 70 L90 90 Z"/>
+    <!-- IHS -->
+    <path d="M58 42 L90 28 L122 42 L90 56 Z"/>
+    <path d="M70 40 L90 32 L110 40 L90 48 Z" opacity="0.8"/>
+    <!-- pin field hint -->
+    <path d="M50 68 L70 76M60 72 L80 80M70 76 L90 84" opacity="0.65"/>
+    <path d="M55 55 L48 52M55 60 L45 56M65 64 L55 68" opacity="0.55"/>
+    <path d="M125 55 L132 52M125 60 L135 56M115 64 L125 68" opacity="0.55"/>
+  </g>
+
+  <!-- ========== CPU B — wafer / delid style ========== -->
+  <g opacity="0.48" stroke="#e8e8e4" stroke-width="1" fill="none" transform="translate(200 160)">
+    <path d="M30 45 L70 28 L110 45 L70 62 Z"/>
+    <path d="M30 45 L30 68 L70 85 L70 62 Z"/>
+    <path d="M70 62 L110 45 L110 68 L70 85 Z"/>
+    <path d="M48 46 L70 36 L92 46 L70 56 Z"/>
+    <!-- dies -->
+    <path d="M58 48 L70 42 L82 48 L70 54 Z"/>
+    <path d="M52 52 L60 48 L68 52 L60 56 Z" opacity="0.75"/>
+    <path d="M72 52 L80 48 L88 52 L80 56 Z" opacity="0.75"/>
+  </g>
+
+  <!-- ========== CPU cooler tower ========== -->
+  <g opacity="0.52" stroke="#e8e8e4" stroke-width="1" fill="none" transform="translate(340 150)">
+    <!-- base -->
+    <path d="M40 90 L80 74 L120 90 L80 106 Z"/>
+    <!-- tower fins -->
+    <path d="M50 88 L50 30 L80 16 L80 74"/>
+    <path d="M80 74 L80 16 L110 30 L110 88"/>
+    <path d="M50 30 L80 16 L110 30 L80 44 Z"/>
+    <path d="M55 70 L105 70M55 58 L105 58M55 46 L105 46M55 34 L105 34" opacity="0.7"/>
+    <!-- fan on side -->
+    <ellipse cx="50" cy="55" rx="8" ry="22"/>
+    <ellipse cx="50" cy="55" rx="3" ry="7"/>
+    <ellipse cx="110" cy="55" rx="8" ry="22"/>
+    <ellipse cx="110" cy="55" rx="3" ry="7"/>
+    <!-- heatpipes -->
+    <path d="M65 90 Q70 50 75 20M80 96 Q85 52 90 18M95 90 Q100 50 105 22" opacity="0.75"/>
+  </g>
+
+  <!-- ========== AIO pump + rad ========== -->
+  <g opacity="0.48" stroke="#e8e8e4" stroke-width="1" fill="none" transform="translate(490 155)">
+    <path d="M20 50 L50 36 L80 50 L50 64 Z"/>
+    <path d="M20 50 L20 72 L50 86 L50 64 Z"/>
+    <path d="M50 64 L80 50 L80 72 L50 86 Z"/>
+    <ellipse cx="50" cy="55" rx="14" ry="8"/>
+    <!-- tubes -->
+    <path d="M80 55 C110 40 120 70 145 55"/>
+    <path d="M80 62 C108 50 122 78 145 62"/>
+    <!-- rad -->
+    <path d="M145 40 L200 22 L220 40 L165 58 Z"/>
+    <path d="M145 40 L145 70 L165 88 L165 58 Z"/>
+    <path d="M165 58 L220 40 L220 70 L165 88 Z"/>
+    <path d="M155 48 L210 32M155 56 L210 40M155 64 L210 48" opacity="0.7"/>
+  </g>
+
+  <!-- ========== RAM kit — 4 sticks isometric ========== -->
+  <g opacity="0.5" stroke="#e8e8e4" stroke-width="1" fill="none" transform="translate(30 290)">
+    <g transform="translate(0 0)">
+      <path d="M20 40 L35 32 L50 40 L35 48 Z"/>
+      <path d="M20 40 L20 100 L35 108 L35 48 Z"/>
+      <path d="M35 48 L50 40 L50 100 L35 108 Z"/>
+      <path d="M24 55h18M24 68h18M24 81h18" opacity="0.75"/>
+    </g>
+    <g transform="translate(40 8)">
+      <path d="M20 40 L35 32 L50 40 L35 48 Z"/>
+      <path d="M20 40 L20 100 L35 108 L35 48 Z"/>
+      <path d="M35 48 L50 40 L50 100 L35 108 Z"/>
+      <path d="M24 55h18M24 68h18M24 81h18" opacity="0.75"/>
+    </g>
+    <g transform="translate(80 16)">
+      <path d="M20 40 L35 32 L50 40 L35 48 Z"/>
+      <path d="M20 40 L20 100 L35 108 L35 48 Z"/>
+      <path d="M35 48 L50 40 L50 100 L35 108 Z"/>
+      <path d="M24 55h18M24 68h18M24 81h18" opacity="0.75"/>
+    </g>
+    <g transform="translate(120 24)">
+      <path d="M20 40 L35 32 L50 40 L35 48 Z"/>
+      <path d="M20 40 L20 100 L35 108 L35 48 Z"/>
+      <path d="M35 48 L50 40 L50 100 L35 108 Z"/>
+      <path d="M24 55h18M24 68h18M24 81h18" opacity="0.75"/>
+    </g>
+  </g>
+
+  <!-- ========== Motherboard fragment ========== -->
+  <g opacity="0.45" stroke="#e8e8e4" stroke-width="1" fill="none" transform="translate(240 285)">
+    <path d="M20 50 L160 10 L240 50 L100 90 Z"/>
+    <path d="M20 50 L20 95 L100 135 L100 90 Z"/>
+    <path d="M100 90 L240 50 L240 95 L100 135 Z"/>
+    <!-- socket -->
+    <path d="M70 55 L110 40 L140 55 L100 70 Z"/>
+    <path d="M85 55 L110 45 L125 55 L100 65 Z" opacity="0.8"/>
+    <!-- dimm slots -->
+    <path d="M130 48 L145 42 L150 48 L135 54 Z"/>
+    <path d="M140 52 L155 46 L160 52 L145 58 Z"/>
+    <path d="M150 56 L165 50 L170 56 L155 62 Z"/>
+    <!-- VRMs -->
+    <path d="M55 62 L75 54 L82 60 L62 68 Z"/>
+    <path d="M48 68 L68 60 L74 66 L54 74 Z"/>
+    <!-- traces -->
+    <path d="M90 72 C120 80 140 70 170 78M100 80 C130 88 150 78 180 86" opacity="0.55"/>
+    <!-- SATA / ports -->
+    <path d="M40 85 L55 90 L55 98 L40 93 Z"/>
+    <path d="M58 92 L73 97 L73 105 L58 100 Z"/>
+  </g>
+
+  <!-- ========== PSU modular ========== -->
+  <g opacity="0.5" stroke="#e8e8e4" stroke-width="1" fill="none" transform="translate(470 300)">
+    <path d="M20 45 L100 20 L145 45 L65 70 Z"/>
+    <path d="M20 45 L20 95 L65 120 L65 70 Z"/>
+    <path d="M65 70 L145 45 L145 95 L65 120 Z"/>
+    <ellipse cx="75" cy="72" rx="22" ry="14"/>
+    <ellipse cx="75" cy="72" rx="7" ry="4"/>
+    <path d="M30 55 L45 48 L52 54 L37 61 Z"/>
+    <path d="M110 40 L125 48 L125 58 L110 50 Z"/>
+    <path d="M28 100 L48 108 L48 116 L28 108 Z"/>
+    <path d="M52 108 L72 116 L72 124 L52 116 Z"/>
+  </g>
+
+  <!-- ========== SSD 2.5 + NVMe ========== -->
+  <g opacity="0.48" stroke="#e8e8e4" stroke-width="1" fill="none" transform="translate(40 430)">
+    <path d="M20 30 L100 10 L130 30 L50 50 Z"/>
+    <path d="M20 30 L20 48 L50 68 L50 50 Z"/>
+    <path d="M50 50 L130 30 L130 48 L50 68 Z"/>
+    <path d="M40 36 L70 26 L85 36 L55 46 Z" opacity="0.75"/>
+    <path d="M90 28 L115 35" opacity="0.7"/>
+  </g>
+  <g opacity="0.48" stroke="#e8e8e4" stroke-width="1" fill="none" transform="translate(180 440)">
+    <path d="M10 25 L110 8 L125 22 L25 40 Z"/>
+    <path d="M10 25 L10 38 L25 53 L25 40 Z"/>
+    <path d="M25 40 L125 22 L125 35 L25 53 Z"/>
+    <path d="M30 30 L50 24 L55 30 L35 36 Z"/>
+    <path d="M60 26 L95 18" opacity="0.7"/>
+    <path d="M60 32 L90 24" opacity="0.7"/>
+  </g>
+
+  <!-- ========== Case fan ========== -->
+  <g opacity="0.5" stroke="#e8e8e4" stroke-width="1" fill="none" transform="translate(340 420)">
+    <path d="M20 40 L70 20 L120 40 L70 60 Z"/>
+    <path d="M20 40 L20 55 L70 75 L70 60 Z"/>
+    <path d="M70 60 L120 40 L120 55 L70 75 Z"/>
+    <ellipse cx="70" cy="45" rx="28" ry="14"/>
+    <ellipse cx="70" cy="45" rx="8" ry="4"/>
+    <path d="M70 31 L70 41M70 49 L70 59M50 45 L60 45M80 45 L90 45M55 35 L63 41M77 49 L85 55M55 55 L63 49M77 41 L85 35" opacity="0.75"/>
+    <circle cx="28" cy="42" r="3"/>
+    <circle cx="112" cy="42" r="3"/>
+    <circle cx="40" cy="62" r="3"/>
+    <circle cx="100" cy="62" r="3"/>
+  </g>
+
+  <!-- ========== Chipset / VRM MOSFET row ========== -->
+  <g opacity="0.42" stroke="#e8e8e4" stroke-width="1" fill="none" transform="translate(500 430)">
+    <path d="M20 30 L50 18 L80 30 L50 42 Z"/>
+    <path d="M20 30 L20 48 L50 60 L50 42 Z"/>
+    <path d="M50 42 L80 30 L80 48 L50 60 Z"/>
+    <path d="M32 34 L50 26 L68 34 L50 42 Z" opacity="0.8"/>
+    <path d="M28 50 L40 46M35 54 L47 50M42 58 L54 54" opacity="0.65"/>
+    <path d="M90 28 L115 18 L130 28 L105 38 Z"/>
+    <path d="M90 28 L90 42 L105 52 L105 38 Z"/>
+    <path d="M105 38 L130 28 L130 42 L105 52 Z"/>
+  </g>
+</svg>

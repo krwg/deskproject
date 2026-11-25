@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/deskproject/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="THE DESK PROJECT / krwg — a digital archive of workspace evolution."
+    />
+    <meta property="og:site_name" content="THE DESK PROJECT" />
+    <meta property="og:title" content="THE DESK PROJECT / krwg" />
+    <meta
+      property="og:description"
+      content="A digital archive of workspace evolution — photographs, timeline, and interactive desk documentation."
+    />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="theme-color" content="#080808" />
+    <title>THE DESK PROJECT / krwg</title>
+    <script>
+      (function () {
+        try {
+          var key = 'desk-theme'
+          var pref = localStorage.getItem(key) || 'system'
+          if (pref !== 'light' && pref !== 'dark' && pref !== 'system') pref = 'system'
+          var dark = window.matchMedia('(prefers-color-scheme: dark)').matches
+          var resolved = pref === 'system' ? (dark ? 'dark' : 'light') : pref
+          document.documentElement.setAttribute('data-theme', resolved)
+          document.documentElement.setAttribute('data-theme-pref', pref)
+          document.documentElement.style.colorScheme = resolved
+          var meta = document.querySelector('meta[name="theme-color"]')
+          if (meta) meta.setAttribute('content', resolved === 'light' ? '#f6f6f4' : '#080808')
+          var loc = localStorage.getItem('desk-locale') || 'en'
+          if (loc !== 'en' && loc !== 'ru') loc = 'en'
+          document.documentElement.lang = loc
+        } catch (e) {}
+      })()
+    </script>
+    <script type="module" crossorigin src="/deskproject/assets/index-COJWTTNP.js"></script>
+    <link rel="modulepreload" crossorigin href="/deskproject/assets/jsx-runtime-DyZJNswf.js">
+    <link rel="modulepreload" crossorigin href="/deskproject/assets/lenisBridge-CZbHZSYU.js">
+    <link rel="modulepreload" crossorigin href="/deskproject/assets/lenis-CQbRfaIr.js">
+    <link rel="modulepreload" crossorigin href="/deskproject/assets/chunk-6KYCQHYJ-1TtwF4DH.js">
+    <link rel="modulepreload" crossorigin href="/deskproject/assets/site-BVKOJS-c.js">
+    <link rel="modulepreload" crossorigin href="/deskproject/assets/LocaleProvider-BjeKvGt1.js">
+    <link rel="modulepreload" crossorigin href="/deskproject/assets/useTheme-BfCP1f-0.js">
+    <link rel="modulepreload" crossorigin href="/deskproject/assets/useInView-DSOkN-Tr.js">
+    <link rel="modulepreload" crossorigin href="/deskproject/assets/preload-helper-DZZF_N1o.js">
+    <link rel="modulepreload" crossorigin href="/deskproject/assets/gsap-CHfANB6y.js">
+    <link rel="modulepreload" crossorigin href="/deskproject/assets/usePrefersReducedMotion-CfvNnRJ0.js">
+    <link rel="stylesheet" crossorigin href="/deskproject/assets/lenis-fOJvfYOR.css">
+    <link rel="stylesheet" crossorigin href="/deskproject/assets/index-CPaMIB_e.css">
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
