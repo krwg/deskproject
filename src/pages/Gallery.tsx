@@ -1,20 +1,32 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import { GalleryGrid } from '@/components/gallery/GalleryGrid'
 import {
   GallerySort,
   type GallerySortOrder,
 } from '@/components/gallery/GallerySort'
-import { flattenMedia, getGallerySets, sortSetsChrono } from '@/data/sets'
+import { SetLightbox } from '@/components/shared/SetLightbox'
+import { flattenMedia, getGallerySets, getSet, sortSetsChrono } from '@/data/sets'
 import { padIndex } from '@/utils/assetUrl'
 import styles from './Gallery.module.css'
 
 export function GalleryPage() {
+  const { setId } = useParams()
+  const navigate = useNavigate()
   const [order, setOrder] = useState<GallerySortOrder>('asc')
   const sets = useMemo(
     () => sortSetsChrono(getGallerySets(), order),
     [order],
   )
   const mediaCount = useMemo(() => flattenMedia(sets).length, [sets])
+  const openSet = setId ? getSet(setId) : undefined
+
+  useEffect(() => {
+    if (!setId) return
+    if (!openSet || openSet.awaiting) {
+      navigate('/gallery', { replace: true })
+    }
+  }, [setId, openSet, navigate])
 
   return (
     <div className={styles.page}>
@@ -39,6 +51,13 @@ export function GalleryPage() {
       <div className={styles.bridge} aria-hidden />
 
       <GalleryGrid sets={sets} />
+
+      {openSet && !openSet.awaiting && (
+        <SetLightbox
+          set={openSet}
+          onClose={() => navigate('/gallery', { replace: true })}
+        />
+      )}
     </div>
   )
 }

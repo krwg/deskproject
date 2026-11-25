@@ -20,6 +20,7 @@ export default function App() {
             <Route index element={<HomePage />} />
             <Route path="evolution" element={<EvolutionPage />} />
             <Route path="gallery" element={<GalleryPage />} />
+            <Route path="gallery/:setId" element={<GalleryPage />} />
             <Route path="about" element={<AboutPage />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Route>

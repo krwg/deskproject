@@ -80,6 +80,8 @@ NN  →  newest
 
 Opening a cover always goes: set grid → single frame. Covers stay mono on the wall; the lightbox is a darkroom (readable in both themes).
 
+Shareable set URLs: `/gallery/44` (closes back to `/gallery`).
+
 ---
 
 ## Media & performance notes

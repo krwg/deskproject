@@ -1,6 +1,5 @@
-import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { ArchiveMedia } from '@/components/shared/ArchiveMedia'
-import { SetLightbox } from '@/components/shared/SetLightbox'
 import type { MediaSet } from '@/types'
 
 type Props = {
@@ -22,26 +21,26 @@ export function SetCover({
   showLabel = true,
   fill = false,
 }: Props) {
-  const [open, setOpen] = useState(false)
+  const navigate = useNavigate()
 
   return (
-    <>
-      <ArchiveMedia
-        media={set.main}
-        aspect={fill ? 'auto' : aspect || set.aspect}
-        eager={eager}
-        sizes={sizes}
-        className={className}
-        showLabel={showLabel}
-        labelId={`SET-${set.folder}`}
-        autoplay
-        mono
-        fill={fill}
-        tone={set.tone}
-        onClick={() => setOpen(true)}
-        alt={set.title}
-      />
-      {open && <SetLightbox set={set} onClose={() => setOpen(false)} />}
-    </>
+    <ArchiveMedia
+      media={set.main}
+      aspect={fill ? 'auto' : aspect || set.aspect}
+      eager={eager}
+      sizes={sizes}
+      className={className}
+      showLabel={showLabel}
+      labelId={`SET-${set.folder}`}
+      autoplay
+      mono
+      fill={fill}
+      tone={set.tone}
+      onClick={() => {
+        if (set.awaiting) return
+        navigate(`/gallery/${set.id}`)
+      }}
+      alt={set.title}
+    />
   )
 }

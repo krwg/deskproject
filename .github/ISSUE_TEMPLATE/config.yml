@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Live site
+    url: https://krwg.github.io/deskproject/
+    about: Open the public archive.
+  - name: Content guide
+    url: https://github.com/krwg/deskproject/blob/main/CONTENT.md
+    about: How to add sets and run the image pipeline.

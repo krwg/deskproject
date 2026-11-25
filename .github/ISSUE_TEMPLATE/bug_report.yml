@@ -1,0 +1,32 @@
+name: Bug report
+description: Something on the site or in the pipeline is broken
+title: "[bug] "
+labels: ["bug"]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: Clear, short description.
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1.
+        2.
+        3.
+    validations:
+      required: true
+  - type: input
+    id: env
+    attributes:
+      label: Environment
+      placeholder: Browser / OS / live site or local
+  - type: textarea
+    id: notes
+    attributes:
+      label: Extra notes
+      description: Screenshots, console errors, set IDs, etc.

@@ -5,11 +5,10 @@ import {
   useState,
   type PointerEvent,
 } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { ArchiveMedia } from '@/components/shared/ArchiveMedia'
-import { SetLightbox } from '@/components/shared/SetLightbox'
 import { evolutionEntries } from '@/data/evolution'
 import { getSet } from '@/data/sets'
-import type { MediaSet } from '@/types'
 import { padIndex } from '@/utils/assetUrl'
 import styles from './Timeline.module.css'
 
@@ -22,8 +21,8 @@ function isInteractiveTarget(target: EventTarget | null) {
 
 export function Timeline() {
   const entries = evolutionEntries
+  const navigate = useNavigate()
   const [index, setIndex] = useState(0)
-  const [openSet, setOpenSet] = useState<MediaSet | null>(null)
   const scrollerRef = useRef<HTMLDivElement>(null)
   const drag = useRef({ active: false, x: 0, left: 0 })
 
@@ -34,10 +33,10 @@ export function Timeline() {
       const set = getSet(entry.setId)
       setIndex(i)
       if (set && !set.awaiting) {
-        setOpenSet(set)
+        navigate(`/gallery/${set.id}`)
       }
     },
-    [entries],
+    [entries, navigate],
   )
 
   const go = useCallback(
@@ -59,13 +58,12 @@ export function Timeline() {
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (openSet) return
       if (e.key === 'ArrowLeft') go(index - 1)
       if (e.key === 'ArrowRight') go(index + 1)
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [go, index, openSet])
+  }, [go, index])
 
   const onPointerDown = (e: PointerEvent<HTMLDivElement>) => {
     if (e.button !== 0) return
@@ -210,10 +208,6 @@ export function Timeline() {
         ENTRY {padIndex(index + 1, 2)} / {padIndex(entries.length, 2)} / DRAG /
         SWIPE
       </div>
-
-      {openSet && (
-        <SetLightbox set={openSet} onClose={() => setOpenSet(null)} />
-      )}
     </div>
   )
 }
