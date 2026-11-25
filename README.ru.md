@@ -92,7 +92,7 @@ NN  →  самый новый
 
 ## Медиа и производительность
 
-Пайплайн (`npm run images`) собирает WebP и thumbs. В UI:
+Пайплайн (`npm run images`) собирает WebP и thumbs. Для видео нужен **ffmpeg** в PATH: пишутся короткие `*-loop5.mp4` (сайт не должен отдавать сырые `.MOV` с телефона). В UI:
 
 - `loading="lazy"` / `decoding="async"`
 - `srcSet` thumb + full где есть

@@ -25,8 +25,9 @@ Put originals in the set folder:
 
 - Prefer a file named `main.*` as the cover (otherwise the first sorted file is used).
 - Photos: `.jpg` / `.jpeg` / `.png` / `.webp`
-- Video: `.mp4` / `.webm` / `.mov` (ffmpeg recommended for loops/thumbs)
-- Skip committing only-derived names like `*-thumb.webp` by hand — the pipeline writes those.
+- Video: drop `.mp4` / `.webm` / `.mov` sources; the pipeline should emit browser `*-loop5.mp4` (+ poster thumb)
+- **ffmpeg is required for video sets** (5s muted H.264 loop + poster). Without it, heavy `.MOV` may stay as the served `src`.
+- Skip committing only-derived names like `*-thumb.webp` / `*-loop5.mp4` by hand — prefer generating them via `npm run images`.
 
 Short note in Russian: see `public/images/sets/README.md`.
 
@@ -39,8 +40,10 @@ npm run images
 This will:
 
 1. Write WebP + thumbnails (when `sharp` works)
-2. Optionally trim video loops (when `ffmpeg` is on PATH)
+2. Transcode videos to `*-loop5.mp4` (H.264, ~5s, muted, faststart) when `ffmpeg` is on PATH — and always prefer that file in the manifest if it already exists
 3. Refresh `src/data/sets.manifest.json` and `src/data/home.manifest.json`
+
+Install ffmpeg (Windows example): `winget install Gyan.FFmpeg` then reopen the terminal.
 
 Commit **both** the media under `public/images/sets/NN/` **and** the updated manifests. Deploy does not run `images` for you.
 

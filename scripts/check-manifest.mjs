@@ -89,6 +89,12 @@ async function main() {
       } catch {
         errors.push(`set ${id}: missing file public/${rel}`)
       }
+
+      if (file.kind === 'video' && /\.mov$/i.test(rel)) {
+        errors.push(
+          `set ${id}: video src is .MOV (${rel}) — run \`npm run images\` with ffmpeg so the manifest points at *-loop5.mp4`,
+        )
+      }
     }
   }
 

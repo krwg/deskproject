@@ -319,6 +319,7 @@ async function processVideo(dir, folder, name) {
   const outLoop = path.join(dir, loopName)
   const thumbName = `${base}-thumb.webp`
   const outThumb = path.join(dir, thumbName)
+  const inputExt = path.extname(name).toLowerCase()
 
   let srcName = name
 
@@ -340,6 +341,8 @@ async function processVideo(dir, folder, name) {
             'scale=min(1280\\,iw):-2',
             '-c:v',
             'libx264',
+            '-pix_fmt',
+            'yuv420p',
             '-preset',
             'veryfast',
             '-crf',
@@ -358,9 +361,15 @@ async function processVideo(dir, folder, name) {
         }
       }
     }
-    if (await fs.stat(outLoop).catch(() => null)) {
-      srcName = loopName
-    }
+  }
+
+  // Always prefer the derived browser MP4 when it exists (even if ffmpeg is offline now).
+  if (await fs.stat(outLoop).catch(() => null)) {
+    srcName = loopName
+  } else if (inputExt === '.mov') {
+    console.warn(
+      ` (serving original ${name}; install ffmpeg and re-run \`npm run images\` for ${loopName})`,
+    )
   }
 
   if (sharp && hasFfmpeg && !(await fileFresh(outThumb, input))) {

@@ -90,7 +90,7 @@ Shareable set URLs: `/gallery/44` (closes back to `/gallery`).
 
 ## Media & performance notes
 
-Pipeline (`npm run images`) builds WebP + thumbnails. The UI uses:
+Pipeline (`npm run images`) builds WebP + thumbnails. For video sets it expects **ffmpeg** on PATH and writes short `*-loop5.mp4` loops (so the site does not serve raw phone `.MOV` files). The UI uses:
 
 - `loading="lazy"` / `decoding="async"` on archive images
 - `srcSet` thumb + full where available
