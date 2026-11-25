@@ -121,6 +121,7 @@ npm run check:manifest
 - WebP / thumbs, короткие muted video loops
 - Home hero + Current Setup + X-Ray
 - Light / Dark / System
+- Язык интерфейса EN / RU (переключатель в шапке)
 - Evolution с OPEN SET
 - Gallery + SetLightbox
 - About + version history
