@@ -1,9 +1,11 @@
-import { useMemo } from 'react'
+import { lazy, Suspense, useMemo } from 'react'
 import { useLocation } from 'react-router-dom'
-import Giscus from '@giscus/react'
 import { giscusConfig, isGiscusConfigured } from '@/data/giscus'
+import { useInView } from '@/hooks/useInView'
 import { useTheme } from '@/hooks/useTheme'
 import styles from './Comments.module.css'
+
+const Giscus = lazy(() => import('@giscus/react'))
 
 function pageDiscussionTerm(pathname: string): string {
   const clean = pathname.replace(/\/+$/, '') || '/'
@@ -18,6 +20,10 @@ export function Comments() {
   const { pathname } = useLocation()
   const { resolved } = useTheme()
   const term = pageDiscussionTerm(pathname)
+  const { ref, inView } = useInView<HTMLElement>({
+    rootMargin: '240px 0px',
+    once: true,
+  })
 
   const themeHref = useMemo(() => {
     if (typeof window === 'undefined') return 'noborder_dark'
@@ -29,7 +35,7 @@ export function Comments() {
   }, [resolved])
 
   return (
-    <section className={styles.section} aria-label="Archive comments">
+    <section ref={ref} className={styles.section} aria-label="Archive comments">
       <div className={styles.head}>
         <div className={styles.kicker}>FIELD NOTES</div>
         <h2 className={styles.title}>COMMENTS</h2>
@@ -40,25 +46,33 @@ export function Comments() {
       </div>
 
       {isGiscusConfigured() ? (
-        <div className={styles.frame}>
-          <Giscus
-            key={`${term}:${themeHref}`}
-            id={`desk-giscus-${term}`}
-            repo={giscusConfig.repo as `${string}/${string}`}
-            repoId={giscusConfig.repoId!}
-            category={giscusConfig.category!}
-            categoryId={giscusConfig.categoryId!}
-            mapping="specific"
-            term={term}
-            strict="1"
-            reactionsEnabled="1"
-            emitMetadata="0"
-            inputPosition="bottom"
-            theme={themeHref}
-            lang="en"
-            loading="lazy"
-          />
-        </div>
+        inView ? (
+          <div className={styles.frame}>
+            <Suspense fallback={<div className={styles.pending}>Loading comments…</div>}>
+              <Giscus
+                key={`${term}:${themeHref}`}
+                id={`desk-giscus-${term}`}
+                repo={giscusConfig.repo as `${string}/${string}`}
+                repoId={giscusConfig.repoId!}
+                category={giscusConfig.category!}
+                categoryId={giscusConfig.categoryId!}
+                mapping="specific"
+                term={term}
+                strict="1"
+                reactionsEnabled="1"
+                emitMetadata="0"
+                inputPosition="bottom"
+                theme={themeHref}
+                lang="en"
+                loading="lazy"
+              />
+            </Suspense>
+          </div>
+        ) : (
+          <div className={styles.pending} aria-hidden>
+            Comments load when this section is near the viewport.
+          </div>
+        )
       ) : (
         <div className={styles.pending}>
           <div className={styles.pendingLabel}>GISCUS NOT CONFIGURED</div>

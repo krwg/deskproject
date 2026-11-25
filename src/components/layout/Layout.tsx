@@ -13,10 +13,13 @@ export function Layout() {
 
   return (
     <div className={styles.shell}>
+      <a className={styles.skip} href="#main-content">
+        Skip to content
+      </a>
       <PageMeta />
       <ScrollProgress />
       <Header />
-      <main className={styles.main}>
+      <main id="main-content" className={styles.main} tabIndex={-1}>
         <div key={location.pathname} className={styles.pageEnter}>
           <Outlet />
           <div className={styles.comments}>
