@@ -9,6 +9,8 @@ export const site = {
   status: 'ACTIVE',
   configLabel: 'CURRENT CONFIGURATION',
   version: '1.1.0',
+  archiveFrom: 2020,
+  archiveTo: 2026,
   intro:
     'This project documents the evolution of my personal workspace — from a simple laptop setup to a fully developed workstation.',
 } as const

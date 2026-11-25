@@ -1,4 +1,5 @@
-import { Outlet, useLocation } from 'react-router-dom'
+import { useEffect, useRef } from 'react'
+import { Outlet, useLocation, matchPath } from 'react-router-dom'
 import { Header } from './Header'
 import { Footer } from './Footer'
 import { PageMeta } from './PageMeta'
@@ -10,6 +11,20 @@ import styles from './Layout.module.css'
 export function Layout() {
   useLenis(true)
   const location = useLocation()
+  const mainRef = useRef<HTMLElement>(null)
+  const firstPath = useRef(location.pathname)
+
+  useEffect(() => {
+    if (location.pathname === firstPath.current) return
+    firstPath.current = location.pathname
+
+    const lightboxOpen = Boolean(
+      matchPath({ path: '/gallery/:setId', end: true }, location.pathname),
+    )
+    if (lightboxOpen) return
+
+    mainRef.current?.focus({ preventScroll: true })
+  }, [location.pathname])
 
   return (
     <div className={styles.shell}>
@@ -19,7 +34,12 @@ export function Layout() {
       <PageMeta />
       <ScrollProgress />
       <Header />
-      <main id="main-content" className={styles.main} tabIndex={-1}>
+      <main
+        ref={mainRef}
+        id="main-content"
+        className={styles.main}
+        tabIndex={-1}
+      >
         <div key={location.pathname} className={styles.pageEnter}>
           <Outlet />
           <div className={styles.comments}>

@@ -1,8 +1,12 @@
 import { Link } from 'react-router-dom'
+import { getGallerySets } from '@/data/sets'
 import { navItems, site } from '@/data/site'
+import { padIndex } from '@/utils/assetUrl'
 import styles from './Footer.module.css'
 
 export function Footer() {
+  const setCount = getGallerySets().length
+
   return (
     <footer className={styles.footer}>
       <div className={styles.inner}>
@@ -22,7 +26,10 @@ export function Footer() {
           </nav>
         </div>
         <div className={styles.bottom}>
-          <span>VERSION [{site.version}]</span>
+          <span>
+            ARCHIVE {site.archiveFrom}–{site.archiveTo} · {padIndex(setCount)}{' '}
+            SETS · VERSION [{site.version}]
+          </span>
           <a href={site.authorUrl} target="_blank" rel="noreferrer">
             / {site.author}
           </a>
