@@ -23,9 +23,6 @@ lerna-debug.log*
 credentials*.json
 secrets/
 
-# Private notes / local-only docs
-CONTENT.md
-
 # Image pipeline leftovers
 *.tmp
 *.webp.tmp
