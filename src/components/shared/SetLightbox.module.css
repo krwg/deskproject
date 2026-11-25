@@ -94,8 +94,23 @@
   color: var(--lightbox-muted);
 }
 
+.gridHead {
+  display: grid;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
 .gridTitle {
   color: var(--lightbox-fg);
+}
+
+.gridCaption {
+  max-width: 52ch;
+  color: var(--lightbox-muted);
+  text-transform: none;
+  letter-spacing: 0.02em;
+  line-height: 1.45;
+  font-size: 0.72rem;
 }
 
 .grid {
@@ -224,8 +239,25 @@
   color: var(--lightbox-muted);
 }
 
+.captionBlock {
+  display: grid;
+  gap: 0.2rem;
+  text-align: right;
+  min-width: 0;
+}
+
 .caption {
   color: var(--lightbox-fg);
+}
+
+.captionNote {
+  color: var(--lightbox-muted);
+  text-transform: none;
+  letter-spacing: 0.02em;
+  line-height: 1.4;
+  font-size: 0.72rem;
+  max-width: 42ch;
+  justify-self: end;
 }
 
 .thumbs {

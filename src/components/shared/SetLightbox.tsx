@@ -5,12 +5,14 @@ import { ArchiveMedia } from '@/components/shared/ArchiveMedia'
 import { getSetMedia } from '@/data/sets'
 import type { MediaSet } from '@/types'
 import { padIndex } from '@/utils/assetUrl'
+import { absoluteUrl } from '@/utils/siteUrl'
 import styles from './SetLightbox.module.css'
 
 type Props = {
   set: MediaSet
   onClose: () => void
   startIndex?: number | null
+  onFrameChange?: (index: number | null) => void
 }
 
 type Mode = 'grid' | 'viewer'
@@ -18,18 +20,29 @@ type Mode = 'grid' | 'viewer'
 const FOCUSABLE =
   'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
 
-export function SetLightbox({ set, onClose, startIndex = null }: Props) {
+export function SetLightbox({
+  set,
+  onClose,
+  startIndex = null,
+  onFrameChange,
+}: Props) {
   const media = useMemo(() => getSetMedia(set), [set])
+  const clampedStart =
+    startIndex == null
+      ? null
+      : Math.min(Math.max(0, startIndex), Math.max(0, media.length - 1))
   const [mode, setMode] = useState<Mode>(
-    startIndex != null ? 'viewer' : 'grid',
+    clampedStart != null ? 'viewer' : 'grid',
   )
-  const [index, setIndex] = useState(startIndex ?? 0)
+  const [index, setIndex] = useState(clampedStart ?? 0)
+  const [copied, setCopied] = useState(false)
   const touchX = useRef<number | null>(null)
   const overlayRef = useRef<HTMLDivElement>(null)
   const closeRef = useRef<HTMLButtonElement>(null)
   const restoreFocusRef = useRef<HTMLElement | null>(null)
   const current = media[index]
   const titleId = `set-lightbox-title-${set.id}`
+  const caption = set.caption?.trim() || ''
 
   useEffect(() => {
     restoreFocusRef.current =
@@ -54,11 +67,18 @@ export function SetLightbox({ set, onClose, startIndex = null }: Props) {
   }, [])
 
   useEffect(() => {
+    if (clampedStart == null) return
+    setMode('viewer')
+    setIndex(clampedStart)
+  }, [clampedStart, set.id])
+
+  useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         e.stopPropagation()
         if (mode === 'viewer') {
           setMode('grid')
+          onFrameChange?.(null)
           return
         }
         onClose()
@@ -89,18 +109,55 @@ export function SetLightbox({ set, onClose, startIndex = null }: Props) {
       }
 
       if (mode !== 'viewer') return
-      if (e.key === 'ArrowLeft') setIndex((i) => Math.max(0, i - 1))
-      if (e.key === 'ArrowRight')
-        setIndex((i) => Math.min(media.length - 1, i + 1))
+      if (e.key === 'ArrowLeft') {
+        setIndex((i) => {
+          const next = Math.max(0, i - 1)
+          onFrameChange?.(next)
+          return next
+        })
+      }
+      if (e.key === 'ArrowRight') {
+        setIndex((i) => {
+          const next = Math.min(media.length - 1, i + 1)
+          onFrameChange?.(next)
+          return next
+        })
+      }
     }
 
     window.addEventListener('keydown', onKey, true)
     return () => window.removeEventListener('keydown', onKey, true)
-  }, [media.length, mode, onClose])
+  }, [media.length, mode, onClose, onFrameChange])
 
   const openViewer = (i: number) => {
     setIndex(i)
     setMode('viewer')
+    onFrameChange?.(i)
+  }
+
+  const goFrame = (i: number) => {
+    setIndex(i)
+    onFrameChange?.(i)
+  }
+
+  const backToGrid = () => {
+    setMode('grid')
+    onFrameChange?.(null)
+  }
+
+  const copyLink = async () => {
+    const path =
+      mode === 'viewer'
+        ? `/gallery/${set.id}?frame=${index}`
+        : `/gallery/${set.id}`
+    const url = absoluteUrl(path)
+    try {
+      await navigator.clipboard.writeText(url)
+      setCopied(true)
+      window.setTimeout(() => setCopied(false), 1600)
+    } catch {
+      window.prompt('Copy link', url)
+    }
   }
 
   const ui = (
@@ -122,14 +179,17 @@ export function SetLightbox({ set, onClose, startIndex = null }: Props) {
         </span>
         <div className={styles.topActions}>
           {mode === 'viewer' && (
-            <button
-              type="button"
-              className={styles.back}
-              onClick={() => setMode('grid')}
-            >
+            <button type="button" className={styles.back} onClick={backToGrid}>
               ← GALLERY
             </button>
           )}
+          <button
+            type="button"
+            className={styles.back}
+            onClick={() => void copyLink()}
+          >
+            {copied ? 'COPIED' : 'COPY LINK'}
+          </button>
           <button
             ref={closeRef}
             type="button"
@@ -144,9 +204,12 @@ export function SetLightbox({ set, onClose, startIndex = null }: Props) {
       {mode === 'grid' ? (
         <div className={styles.gridWrap} data-lenis-prevent data-lenis-prevent-wheel>
           <div className={styles.gridMeta}>
-            <span className={styles.gridTitle} id={titleId}>
-              {set.title}
-            </span>
+            <div className={styles.gridHead}>
+              <span className={styles.gridTitle} id={titleId}>
+                {set.title}
+              </span>
+              {caption ? <p className={styles.gridCaption}>{caption}</p> : null}
+            </div>
             <span>SET {set.folder}</span>
           </div>
 
@@ -185,8 +248,11 @@ export function SetLightbox({ set, onClose, startIndex = null }: Props) {
             const dx = (e.changedTouches[0]?.clientX ?? 0) - touchX.current
             touchX.current = null
             if (Math.abs(dx) < 48) return
-            if (dx < 0) setIndex((i) => Math.min(media.length - 1, i + 1))
-            else setIndex((i) => Math.max(0, i - 1))
+            if (dx < 0) {
+              goFrame(Math.min(media.length - 1, index + 1))
+            } else {
+              goFrame(Math.max(0, index - 1))
+            }
           }}
         >
           <span id={titleId} className={styles.srOnly}>
@@ -209,7 +275,7 @@ export function SetLightbox({ set, onClose, startIndex = null }: Props) {
                 type="button"
                 aria-label="Previous"
                 disabled={index === 0}
-                onClick={() => setIndex((i) => i - 1)}
+                onClick={() => goFrame(index - 1)}
               >
                 ←
               </button>
@@ -217,7 +283,7 @@ export function SetLightbox({ set, onClose, startIndex = null }: Props) {
                 type="button"
                 aria-label="Next"
                 disabled={index === media.length - 1}
-                onClick={() => setIndex((i) => i + 1)}
+                onClick={() => goFrame(index + 1)}
               >
                 →
               </button>
@@ -230,7 +296,10 @@ export function SetLightbox({ set, onClose, startIndex = null }: Props) {
                 {index === 0 ? 'COVER' : `IMG ${padIndex(index)}`}
                 {current.kind === 'video' ? ' / LOOP' : ''}
               </span>
-              <span className={styles.caption}>{set.title}</span>
+              <div className={styles.captionBlock}>
+                <span className={styles.caption}>{set.title}</span>
+                {caption ? <span className={styles.captionNote}>{caption}</span> : null}
+              </div>
             </div>
             {media.length > 1 && (
               <div className={styles.thumbs} aria-label="Frames">
@@ -244,7 +313,7 @@ export function SetLightbox({ set, onClose, startIndex = null }: Props) {
                     ]
                       .filter(Boolean)
                       .join(' ')}
-                    onClick={() => setIndex(i)}
+                    onClick={() => goFrame(i)}
                     aria-label={`Open ${i + 1}`}
                     aria-current={i === index ? 'true' : undefined}
                   >

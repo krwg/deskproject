@@ -42,11 +42,14 @@
   position: relative;
   aspect-ratio: 4 / 3;
   min-height: 0;
-  cursor: pointer;
   background: var(--plate);
   border: 1px solid var(--plate-border);
   overflow: hidden;
   transition: border-color 320ms var(--ease-out);
+}
+
+.item :global(a) {
+  cursor: zoom-in;
 }
 
 .item:hover,

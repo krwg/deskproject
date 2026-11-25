@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { GalleryGrid } from '@/components/gallery/GalleryGrid'
 import {
   GallerySort,
@@ -13,6 +13,7 @@ import styles from './Gallery.module.css'
 export function GalleryPage() {
   const { setId } = useParams()
   const navigate = useNavigate()
+  const [searchParams, setSearchParams] = useSearchParams()
   const [order, setOrder] = useState<GallerySortOrder>('asc')
   const sets = useMemo(
     () => sortSetsChrono(getGallerySets(), order),
@@ -21,12 +22,30 @@ export function GalleryPage() {
   const mediaCount = useMemo(() => flattenMedia(sets).length, [sets])
   const openSet = setId ? getSet(setId) : undefined
 
+  const frameRaw = searchParams.get('frame')
+  const frameParsed =
+    frameRaw != null && frameRaw !== '' ? Number.parseInt(frameRaw, 10) : null
+  const startIndex =
+    frameParsed != null && Number.isFinite(frameParsed) ? frameParsed : null
+
   useEffect(() => {
     if (!setId) return
     if (!openSet || openSet.awaiting) {
       navigate('/gallery', { replace: true })
     }
   }, [setId, openSet, navigate])
+
+  const onFrameChange = (index: number | null) => {
+    setSearchParams(
+      (prev) => {
+        const next = new URLSearchParams(prev)
+        if (index == null) next.delete('frame')
+        else next.set('frame', String(index))
+        return next
+      },
+      { replace: true },
+    )
+  }
 
   return (
     <div className={styles.page}>
@@ -55,6 +74,8 @@ export function GalleryPage() {
       {openSet && !openSet.awaiting && (
         <SetLightbox
           set={openSet}
+          startIndex={startIndex}
+          onFrameChange={onFrameChange}
           onClose={() => navigate('/gallery', { replace: true })}
         />
       )}

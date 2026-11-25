@@ -1,6 +1,7 @@
-import { useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { ArchiveMedia } from '@/components/shared/ArchiveMedia'
 import type { MediaSet } from '@/types'
+import styles from './SetCover.module.css'
 
 type Props = {
   set: MediaSet
@@ -21,9 +22,7 @@ export function SetCover({
   showLabel = true,
   fill = false,
 }: Props) {
-  const navigate = useNavigate()
-
-  return (
+  const media = (
     <ArchiveMedia
       media={set.main}
       aspect={fill ? 'auto' : aspect || set.aspect}
@@ -36,11 +35,19 @@ export function SetCover({
       mono
       fill={fill}
       tone={set.tone}
-      onClick={() => {
-        if (set.awaiting) return
-        navigate(`/gallery/${set.id}`)
-      }}
       alt={set.title}
     />
+  )
+
+  if (set.awaiting) return media
+
+  return (
+    <Link
+      to={`/gallery/${set.id}`}
+      className={styles.link}
+      aria-label={`Open set ${set.folder}: ${set.title}`}
+    >
+      {media}
+    </Link>
   )
 }
